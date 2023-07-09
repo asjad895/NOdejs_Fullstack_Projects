@@ -50,9 +50,6 @@ const nodemailer = require('nodemailer');
 const auth = require('./middleware/auth'); // Import the auth middleware
 // Create a transporter
 const transporter = nodemailer.createTransport({
-  // host: "smtp.forwardemail.net",
-  // port: 587,
-  // secure:false,
   service: 'gmail',
   auth: {
     user: 'iiitasjad895@gmail.com',
@@ -63,8 +60,6 @@ const transporter = nodemailer.createTransport({
 
 
 const sendRegistrationEmail = (email,username,password) => {
-  // Implement your email sending logic here
-  // Example using a library like Nodemailer:
   const mailOptions = {
     from: 'mdasjad895@gmail.com',
     to: email,
@@ -154,7 +149,7 @@ app.post('/register', async (req, res) => {
   const existingUser = await User.findOne({username});
   if (existingUser) {
     // User already exists, handle it by alerting the user
-    return res.send('User already exists. Please choose a different username or email.' );
+    return res.status(400).json({error:'User already exists. Please choose a different username or email.'} );
   }
 
   // Create a new user
@@ -170,7 +165,7 @@ app.post('/register', async (req, res) => {
     })
     .catch((err) => {
       console.error('Failed to save user:', err);
-      res.status(500).send('Registration failed. Please try again.');
+      res.status(500).json({error:'Registration failed. Please try again.'});
     });
 });
 
@@ -195,11 +190,13 @@ app.post('/register', async (req, res) => {
           res.redirect('/chat');
         } else {
             // Login failed, redirect back to login page with an error message
+            res.status(500).json({error:'invalid credential'})
             res.redirect('/login');
         }
     })
     .catch(err => {
         console.error('Login error:', err);
+        res.status(500).json({error:'invalid credential'})
         res.redirect('/login');
     });
   });

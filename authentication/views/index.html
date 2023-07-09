@@ -6,8 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registration</title>
   <link rel="stylesheet" href="../css/register.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+  <script>
+    // Check if there is an error message in the query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+
+    // Display the error alert if the error message exists
+    if (error) {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertHTML = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          ${error}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      `;
+      alertContainer.innerHTML = alertHTML;
+    }
+  </script>
   <h1 class="peakchat">Peakchat</h1>
   <div class="card">
     <h2>Registration</h2>
