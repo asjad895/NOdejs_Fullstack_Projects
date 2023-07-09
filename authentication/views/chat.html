@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achat-share with control</title>
+    <script defer src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <script defer src="js/client.js"></script>
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+<nav>
+    <div class="logo">
+        <img src="/logo.jpg" alt="Chat App Logo" class="logo-img">
+        <h1>Peakchat</h1>
+    </div>
+</nav>
+<body>
+    <div class="container">
+        <section class="chat-section">
+            <div class="message sender">
+                <div class="avatar sender-avatar"></div>
+                <!-- <p>Hi asjad</p> -->
+            </div>
+            <div class="message receiver">
+                <div class="avatar receiver-avatar"></div>
+            </div>
+            <!-- Additional messages... -->
+        </section>
+    </div>
+    <div class="send">
+        <form action="#" id="send-cont">
+            <input type="text" name="sendip" placeholder="Write a message..."  id="sendip">
+            <button class="btn" type="submit">send</button>
+        </form>
+    </div>
+</body>
+</html>

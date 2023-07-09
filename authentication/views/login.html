@@ -1,0 +1,36 @@
+<!-- views/login.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+    <h1 class="peakchat">Peakchat</h1>
+    <div class="card">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <button id="loginButton">Register</button>
+    </div>
+    <script>
+        // Get the login button element
+        const loginButton = document.getElementById('loginButton');
+      
+        // Add click event listener to the button
+        loginButton.addEventListener('click', () => {
+          // Redirect the user to the default page
+          window.location.href = '/'; // Replace '/' with your desired URL
+        });
+      </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+/* Remove fixed width for logo container */
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #a8a59e;
+    padding: 10px;
+  }
+  .logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  /* Add a media query for smaller screens */
+  @media (max-width: 768px) {
+    .logo h1 {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-weight: bold;
+      font-size: 40px;
+      color: #4646b3;
+      text-align: center;
+      margin-top: 20px;
+      animation: fade-in 5s ease-in-out;
+      text-shadow: #9a9c2b;
+    }
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #6f84e9;
+    color: #a8942d;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .chat-section {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(156, 171, 185);
+    box-sizing: border-box;
+    height: 70vh;
+    border-radius: 5px;
+    overflow-y: auto;
+    padding-bottom: 33px;
+  }
+  
+  .message {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .sender {
+    margin-top: 10px;
+    background-color: #4c97e8;
+    padding: 10px;
+    border-radius: 10px 10px 10px 0;
+    margin-left: auto;
+    float: left;
+    clear: both;
+  }
+  
+  .receiver {
+    margin-top: 20px;
+    background-color: #7f520b;
+    padding: 10px;
+    border-radius: 0 10px 10px 10px;
+    margin-right: auto;
+    float: right;
+    clear: both;
+  }
+  
+  .sender-avatar {
+    background-color: #f13f03;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .receiver-avatar {
+    background-color: #1e0243;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #050505;
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: transparent;
+  }
+  
+  .send {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+  }
+  
+  .send form {
+    display: flex;
+    align-items: center;
+    width: 70%; /* Set width to 100% */
+  }
+  
+  .send input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    width: 100%; /* Set width to 100% */
+    border-radius: 4px;
+  }
+  
+  .send button {
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 10px;
+    transition: transform 0.2s;
+  }
+  
+  .send button:hover {
+    transform: scale(1.1);
+  }
+  
+  .send button:active {
+    transform: scale(0.9);
+    transition: transform 0.1s;
+  }
+  

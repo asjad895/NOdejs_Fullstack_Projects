@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+  <h1 class="peakchat">Peakchat</h1>
+  <div class="card">
+    <h2>Registration</h2>
+    <form action="/register" method="POST">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <button type="submit">Register</button>
+
+    </form>
+    <button id="loginButton">Login</button>
+    <script>
+      // Get the login button element
+      const loginButton = document.getElementById('loginButton');
+    
+      // Add click event listener to the button
+      loginButton.addEventListener('click', () => {
+        // Redirect the user to the default page
+        window.location.href = '/login'; // Replace '/' with your desired URL
+      });
+    </script>
+  </div>
+</body>
+</html>
+
+  
