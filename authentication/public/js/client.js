@@ -1,5 +1,5 @@
 
-const socket = io('http://localhost:8000/chat');
+const socket = io('http://localhost:8000');
 const form = document.getElementById('send-cont');
 const mesip = document.getElementById('sendip');
 const messagecontainer = document.querySelector('.chat-section');
@@ -42,35 +42,9 @@ const append = (message, position) => {
       alert('Please write something');
     }
   });
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const nam = getCookie('user');
-    console.log(nam);
-  });
-  
-function getCookie(name) {
-  const cookieString = document.cookie;
-  console.log(cookieString);
-  const cookies = cookieString.split('; ');
-  console.log(cookies);
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].split(':');
-    console.log(cookie);
-    if (cookie[0] === name) {
-      return cookie[1];
-    }
-  }
 
-  return null;
-}
-
-socket.on('new_user', (name) => {
-  console.log('Username:', name);
-  // Use the username as needed
-});
-
-
-socket.emit('new_user');
+const name='tester';
+socket.emit('new_user',name);
 
 socket.on('user_joined', ({ name }) => {
   append(`${name} joined the chat`, 'receiver');
@@ -79,6 +53,16 @@ socket.on('user_joined', ({ name }) => {
 // recieve is event
 socket.on('recieve', data => {
     append(`${data.name}: ${data.message}`, 'receiver');
-    // console.log('aa gya');
+    console.log(' mess aa gya');
   });
   
+// Import the library
+// import 'emoji-picker-element';
+
+// // Add the emoji picker to the HTML
+// const input = document.querySelector('sendip');
+// const picker = document.createElement('emoji-picker');
+// input.after(picker);
+import { Picker } from 'emoji-picker-element';
+const picker = new Picker();
+document.body.appendChild(picker);

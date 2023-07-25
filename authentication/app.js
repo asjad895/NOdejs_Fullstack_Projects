@@ -48,6 +48,7 @@ app.get('/', async (req, res) => {
 const nodemailer = require('nodemailer');
 
 const auth = require('./middleware/auth'); // Import the auth middleware
+const { url } = require('inspector');
 // Create a transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -144,19 +145,23 @@ const sendRegistrationEmail = (email,username,password) => {
 app.post('/register', async (req, res) => {
   // Extract the registration form data from the request body
   const { username, password, email } = req.body;
+  const emailvar=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if(!emailvar.test(email)){
+    res.send({error:"email is not vaild"});
+  }
 
   // Check if a user with the same username or email already exists
   const existingUser = await User.findOne({username});
   if (existingUser) {
     // User already exists, handle it by alerting the user
-    return res.status(400).json({error:'User already exists. Please choose a different username or email.'} );
+    return res.send({error:'User already exists. Please choose a different username or email.'} );
   }
 
   // Create a new user
   const newUser = new User({ username, password, email });
 
   // Save the user to the database
-  newUser.save()
+  await newUser.save()
     .then(() => {
       // Send registration success email to the user
       sendRegistrationEmail(email, username, password);
@@ -165,7 +170,7 @@ app.post('/register', async (req, res) => {
     })
     .catch((err) => {
       console.error('Failed to save user:', err);
-      res.status(500).json({error:'Registration failed. Please try again.'});
+      res.status(400).json({error:'Registration failed. Please try again.'});
     });
 });
 
@@ -173,9 +178,11 @@ app.post('/register', async (req, res) => {
   app.get('/login', async (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'login.html'));
   });
-
+  // const cookie='a';
   app.get('/chat', auth, async (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'chat.html'));
+    const cookie = req.cookies.user;
+    console.log('cookie user:',cookie);
   });
 
   app.post('/login', async (req, res) => {
@@ -186,18 +193,19 @@ app.post('/register', async (req, res) => {
         if (user) {
           // Set a cookie for the logged-in user
           res.cookie('user', user.username, { maxAge: 900000, httpOnly: true })
+          // const token=jwt.sign({id:user.id},process.env.JWT_SECRET_KEY);
             // Login successful, render the dashboard page with the chat app
           res.redirect('/chat');
         } else {
             // Login failed, redirect back to login page with an error message
-            res.status(500).json({error:'invalid credential'})
-            res.redirect('/login');
+            res.status(400).json({error:'invalid credential'})
+            // res.redirect('/login');
         }
     })
     .catch(err => {
         console.error('Login error:', err);
-        res.status(500).json({error:'invalid credential'})
-        res.redirect('/login');
+        res.status(400).json({error:'invalid credential'})
+        // res.redirect('/login');
     });
   });
 
@@ -267,3 +275,6 @@ app.post('/register', async (req, res) => {
 
 
 module.exports = app;
+// module.exports = {
+//   cookie,
+// };
