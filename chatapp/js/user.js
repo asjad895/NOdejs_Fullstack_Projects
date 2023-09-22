@@ -20,6 +20,25 @@ async function fetchData() {
   console.log('Fetched data:', groupO);
   return groupO;
 }
+async function fetchMessagesForGroup(groupName) {
+  try {
+    // Make an AJAX request to fetch messages for the selected group
+    const response = await fetch(`http://localhost:8000/api/messages?group=${groupName}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    
+    const data = await response.json();
+
+    // Display the fetched messages in the chat section
+    const chatSection = document.querySelector('.chat-section');
+    // Implement your logic to display messages in the chat section
+
+    console.log(data); // For debugging purposes
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 async function populateGroupList() {
   const groupList = document.getElementById('group-list');
@@ -32,19 +51,63 @@ async function populateGroupList() {
   groupO.groupNames.forEach(name => {
     const listItem = document.createElement('li');
     listItem.textContent = name;
+    // Assign an id based on the group name
+    listItem.id = `group-${name}`;
     // Add click event listeners to join groups here, if needed
     groupList.appendChild(listItem);
+     // Add a click event listener for each group name
+    listItem.addEventListener('click', () => {
+      // Clear the chat messages or fetch and display messages for the selected group
+      // Update the chat banner with the selected group's name
+      alert('client clicked chat banner group');
+    const chatBanner = document.querySelector('.chatbanner h2 .left-content');
+    chatBanner.textContent = name;
+    //update right
+    showGroupUse(name);
+
+      // Implement your logic to fetch and display messages for the selected group
+      // You can make an AJAX request to your server here
+
+      // Example: Fetch and display messages for the selected group
+    fetchMessagesForGroup(name);
+    });
+
+    // // Append the list item to the group list
+    // groupList.appendChild(listItem);
   });
+
 }
 
-// Add event listener for the Create Group button
+
 const createGroupButton = document.getElementById('create-group-button');
+const createGroupForm = document.getElementById('create-group-form');
+const newChatForm = document.getElementById('new-chat-form');
 
 createGroupButton.addEventListener('click', () => {
-  // Implement your logic to create a new group here
-  alert('Create Group button clicked.');
+  createGroupForm.style.display = 'block';
 });
 
+document.getElementById('cancel-button').addEventListener('click', () => {
+  createGroupForm.style.display = 'none';
+});
+
+newChatForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const chatName = document.getElementById('chat-name').value;
+  const chatUsecase = document.getElementById('chat-usecase').value;
+
+  // Send the chatName and chatUsecase to your server using fetch or another method to store in the database.
+
+  // After storing the data, you can close the form.
+  createGroupForm.style.display = 'none';
+});
+
+const aianalyzer = document.getElementById('ai-analyzer-button');
+aianalyzer.addEventListener('click', () => {
+  //logic
+  alert("Analyzer clicked");
+});
 // Initial population of the group list
 populateGroupList();
 //create new group
@@ -53,20 +116,23 @@ populateGroupList();
 
 
 //chat-section
-async function showGroupUse() {
+async function showGroupUse(group) {
   try {
-    const response = await fetch('http://localhost:8000/api/?Asjad'); // Make a GET request to your API endpoint
+    const url='http://localhost:8000/api/groups/'.concat(group);
+    const response = await fetch(url); // Make a GET request to your API endpoint
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     const data = await response.json(); // Parse the JSON response
+    const chatBanner = document.querySelector('.chatbanner h2 .right-content');
+
+    chatBanner.textContent=data.usecase;
+
     console.log(data); // Return the fetched data
   } catch (error) {
-    console.error('Error:', error);
-  
-  };
+    console.error('Error:', error);};
 }
-showGroupUse();
+showGroupUse('Asjad');
 
 const sendForm = document.getElementById('send-cont');
 

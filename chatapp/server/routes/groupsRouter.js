@@ -7,7 +7,7 @@ routerg.route('/groups/').get(groups);
 
 // Define a route to create a new group
 routerg.route('/newgroups/').post(newgroups);
-routerg.route('/groups:name').get(groupsone);
+routerg.route('/groups/:name').get(groupsone);
 
 // Add more routes as needed
 

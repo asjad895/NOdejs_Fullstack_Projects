@@ -27,23 +27,30 @@ const groups=async (req, res) => {
     }
   }
 
+  const groupsone = async (req, res) => {
+    try {
+      const { name } = req.params;
   
-const groupsone=async (req, res) => {
-  try {
-    // Connect to the MongoDB database
-    await mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
-    console.log("Connected to MongoDB");
-    const { name } = req.params;
-    // Fetch existing groups from the "groups" collection
-    const existingGroups = await Group.find({name}).toArray()[0];
-    console.log(existingGroups);
-    res.json(existingGroups);
-    // mongoose.connection.close();
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: 'Internal Server Error' });
+      // Connect to the MongoDB database
+      await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+      console.log("Connected to MongoDB");
+  
+      // Fetch a single document from the "groups" collection by name
+      const existingGroup = await Group.findOne({ name });
+  
+      if (!existingGroup) {
+        // If no group with the given name is found, return a 404 response
+        return res.status(404).json({ error: 'Group not found' });
+      }
+  
+      // Send the found group as a JSON response
+      res.json(existingGroup);
+    } catch (err) {
+      console.error("Error:", err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
-}
+  
 
   const newgroups=async (req, res) => {
     try {

@@ -13,6 +13,19 @@
                 <button id="ai-analyzer-button">AI Analyzer</button>
                  <h2>Groups</h2>
             </div>
+            <div class="overlay" id="create-group-form">
+                <div class="form-container">
+                    <h2>Create New Chat</h2>
+                    <form id="new-chat-form">
+                        <label for="chat-name">Name:</label>
+                        <input type="text" id="chat-name" name="chat-name" required>
+                        <label for="chat-usecase">Usecase:</label>
+                        <input type="text" id="chat-usecase" name="chat-usecase" required>
+                        <button type="submit">Create</button>
+                    </form>
+                    <button id="cancel-button">Cancel</button>
+                </div>
+            </div>
             <div class="group-list">
                 <!-- List of existing groups -->
                 <ul id="group-list">
@@ -24,35 +37,17 @@
             <!-- Second column content (chat messages) -->
             <div class="chatbanner">
                 <!-- sender name -->
-                 <h2>Asjad</h2>
+                 <h2>
+                    <span class="left-content">Asjad</span>
+                    <span class="right-content">New Data</span>
+                 </h2>
             </div>
             <div class="chat">
                 <div class="message sender">
                     <div class="avatar sender-avatar"></div>
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-        
                 </div>
                 <div class="message receiver">
                     <div class="avatar receiver-avatar"></div>
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
-                    <p>Hi asjad</p> 
 
                 </div>
             </div>
