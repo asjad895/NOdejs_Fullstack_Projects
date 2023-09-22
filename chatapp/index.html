@@ -1,37 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Achat-share with control</title>
-    <script defer src="http://localhost:8000/socket.io/socket.io.js"></script>
-    <script defer src="js/client.js"></script>
+    <!-- ... Your existing head content ... -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<nav>
-    <div class="logo">
-        <img src="logo.jpg" alt="Chat App Logo" class="logo-img">
-        <h1>A Control chat app</h1>
-    </div>
-</nav>
 <body>
     <div class="container">
-        <section class="chat-section">
-            <div class="message sender">
-                <div class="avatar sender-avatar"></div>
-                <!-- <p>Hi asjad</p> -->
+        <section class="sidebar">
+            <div class="sidebarbanner">
+                <button id="create-group-button">New Chat</button>
+                <button id="ai-analyzer-button">AI Analyzer</button>
+                 <h2>Groups</h2>
             </div>
-            <div class="message receiver">
-                <div class="avatar receiver-avatar"></div>
+            <div class="group-list">
+                <!-- List of existing groups -->
+                <ul id="group-list">
+                    <!-- Existing groups will be dynamically added here -->
+                </ul>
+            </div>
+        </section>        
+        <section class="chat-section">
+            <!-- Second column content (chat messages) -->
+            <div class="chatbanner">
+                <!-- sender name -->
+                 <h2>Asjad</h2>
+            </div>
+            <div class="chat">
+                <div class="message sender">
+                    <div class="avatar sender-avatar"></div>
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+        
+                </div>
+                <div class="message receiver">
+                    <div class="avatar receiver-avatar"></div>
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+                    <p>Hi asjad</p> 
+
+                </div>
             </div>
             <!-- Additional messages... -->
+            <div class="send">
+                <form action="#" id="send-cont">
+                    <input type="text" name="sendip" placeholder="Write a message..."  id="sendip">
+                    <button class="btn" type="submit">send</button>
+                </form>
+            </div>
         </section>
     </div>
-    <div class="send">
-        <form action="#" id="send-cont">
-            <input type="text" name="sendip" placeholder="Write a message..."  id="sendip">
-            <button class="btn" type="submit">send</button>
-        </form>
-    </div>
+    <script src="js/user.js"></script>
+    <script src="js/client.js"></script>
 </body>
 </html>
+

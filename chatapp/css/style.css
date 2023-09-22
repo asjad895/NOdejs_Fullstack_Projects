@@ -1,104 +1,185 @@
-/* Remove fixed width for logo container */
-nav {
+/* Add this CSS to your existing styles or style.css file */
+.container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
 }
-.logo {
-  display: flex;
-  align-items: center;
+
+body{
+  max-height: 100vh;
+  padding: 0%;
+}
+
+.sidebar {
+  width: 20%; /* Adjust this width as needed */
+  border: 1px solid #0a0808;
+  border-radius: 5px;
+  /* padding: 10px; */
+  margin-top: 10px; /* Lift the sidebar above the chat section */
+  min-height: 90vh;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  text-align: center;
+  background-color: #b8daf9;
+}
+
+h2{
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: #ef380f;
-  padding: 10px;
+  border: 1px solid #f5d8d8;
+  z-index: 5;
+  color:crimson;
+  background-color: #0a85f8;
+
 }
-.logo img {
-  width: 40px;
-  height: 40px;
+/* Adjust the height as needed */
+.group-list {
+  height: calc(100vh - 230px); /* Set a fixed height, subtracting header and footer heights */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+  text-align: center;
+  border: 1px solid #f5d8d8;
+  border-radius: 5px;
+}
+
+/* Adjust the height as needed */
+
+#group-list {
+  list-style:none;
+  padding: 0;
+}
+
+/* Style for each dynamically added group item */
+#group-list li {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Hover effect for the group items */
+#group-list li:hover {
+  background-color: #719dee; /* Adjust to your desired hover background color */
+  border-color: #000000; /* Adjust to your desired hover border color */
+}
+.group-list::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+}
+/* Style the scrollbar thumb (the draggable part) */
+.group-list::-webkit-scrollbar-thumb {
+  background-color: #042997; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners for the scrollbar thumb */
+}
+
+/* Style the scrollbar track (the background) */
+.group-list::-webkit-scrollbar-track {
+  background-color: #759ff5; /* Color of the scrollbar track */
+  border-radius: 5px; /* Rounded corners for the scrollbar track */
+}
+
+/* Hide the scrollbar on Firefox */
+.group-list{
+  scrollbar-width: thin;
+  scrollbar-color: #4caf50 #ccc; /* Color of the scrollbar thumb and track on Firefox */
+}
+
+.sidebarbanner{
+  background-color: #8fc7f9;
+  padding: 8px 15px;
+  z-index: 10;
+  box-shadow: #1e0243;
+  /* display: flex; */
+  align-items: center;
+}
+#create-group-button,#ai-analyzer-button {
+  background-color: #0a85f8;
+  color: white;
+  border: black;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
   margin-right: 10px;
 }
-
-/* Add a media query for smaller screens */
-@media (max-width: 768px) {
-  .logo h1 {
-    font-size: 20px;
-    font-style:oblique;
-    font-weight: 50;
-    color: #13287b;
-  }
+#create-group-button:hover {
+  background-color: #45a049;
+}
+#ai-analyzer-button:hover {
+  background-color: #45a049;
+}
+.chatbanner{
+  background-color: #8fc7f9;
+  padding: 8px 15px;
+  z-index: 10;
+  box-shadow: #1e0243;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color:#6f84e9;
-  color: #74ab1500;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.chat-section {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(4, 4, 4);
-  box-sizing: border-box;
-  height: 70vh;
+.chat {
+  background-color: #fceaea; /* Set your desired background color for messages */
+  flex-grow: 1; /* Allow the chat messages to grow and take available space */
+  height: calc(100vh - 200px); /* Set a fixed height, subtracting header and footer heights */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+  text-align: center;
+  border: 1px solid #f5d8d8;
   border-radius: 5px;
-  overflow-y: auto;
-  padding-bottom: 33px;
+  border-top: #000000;
+  background-image: url('../img/chat_back.png');
+
 }
+
+.chat::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+}
+/* Style the scrollbar thumb (the draggable part) */
+.chat::-webkit-scrollbar-thumb {
+  background-color: #042997; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners for the scrollbar thumb */
+}
+
+/* Style the scrollbar track (the background) */
+.chat::-webkit-scrollbar-track {
+  background-color: #759ff5; /* Color of the scrollbar track */
+  border-radius: 5px; /* Rounded corners for the scrollbar track */
+}
+
+/* Hide the scrollbar on Firefox */
+.chat{
+  scrollbar-width: thin;
+  scrollbar-color: #4caf50 #ccc; /* Color of the scrollbar thumb and track on Firefox */
+}
+
 
 .message {
-  padding: 10px;
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  margin-left: 2px;
 }
 
 .sender {
   margin-top: 10px;
-  background-color: #4c97e8;
+  background-color: #a2ccf8;
   padding: 10px;
   border-radius: 10px 10px 10px 0;
   margin-left: auto;
-  float: left;
+  float: right;
   clear: both;
+  justify-content: flex-start;
 }
 
 .receiver {
   margin-top: 20px;
-  background-color: #7f520b;
+  background-color: #d7ddf8;
   padding: 10px;
   border-radius: 0 10px 10px 10px;
   margin-right: auto;
-  float: right;
+  float: left;
   clear: both;
-}
-
-.sender-avatar {
-  background-color: #f13f03;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.receiver-avatar {
-  background-color: #1e0243;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+  justify-content: flex-end;
 }
 
 p {
-  margin: 0;
+  margin-left: 2px;
   font-size: 16px;
   line-height: 1.5;
   color: #050505;
@@ -108,28 +189,43 @@ p {
   background-color: transparent;
 }
 
+
+.chat-section {
+  width: 80%; /* Adjust this width as needed */
+  border: 1px solid #0a0808;
+  border-radius: 5px;
+  /* padding: 10px 10px; */
+  margin-top: 10px; /* Lift the sidebar above the chat section */
+  min-height: 90vh;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  margin-left: 5px;
+  min-height: fit-content;
+}
+
+
 .send {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  z-index: 10;
+  background-color: #000000;
 }
 
 .send form {
   display: flex;
   align-items: center;
-  width: 70%; /* Set width to 100% */
+  width: 80%; /* Set width to 100% */
 }
 
 .send input[type="text"] {
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #a8bbf4;
   width: 100%; /* Set width to 100% */
   border-radius: 4px;
 }
 
 .send button {
-  padding: 8px 16px;
-  background-color: #4caf50;
+  background-color: #e373f2;
   color: white;
   border: none;
   border-radius: 4px;
@@ -138,7 +234,7 @@ p {
 }
 
 .send button:hover {
-  transform: scale(1.1);
+  transform: scale(1.5);
 }
 
 .send button:active {
