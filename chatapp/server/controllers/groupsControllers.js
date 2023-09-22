@@ -77,4 +77,4 @@ const groups=async (req, res) => {
     }
   }
 
-  module.exports ={groups,newgroups,groupsone};
+module.exports ={groups,newgroups,groupsone};

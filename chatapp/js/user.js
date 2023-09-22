@@ -71,9 +71,6 @@ async function populateGroupList() {
       // Example: Fetch and display messages for the selected group
     fetchMessagesForGroup(name);
     });
-
-    // // Append the list item to the group list
-    // groupList.appendChild(listItem);
   });
 
 }
@@ -126,9 +123,6 @@ aianalyzer.addEventListener('click', () => {
 // Initial population of the group list
 populateGroupList();
 //create new group
-
-
-
 
 //chat-section
 async function showGroupUse(group) {

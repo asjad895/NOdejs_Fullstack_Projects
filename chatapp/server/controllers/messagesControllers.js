@@ -11,7 +11,6 @@ const messagesC=async (req, res) => {
         groupName,
         text,
       });
-  
       // Save the message to the database
       await message.save();
   
