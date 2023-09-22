@@ -5,6 +5,29 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
+// Enable CORS for your frontend origin
+app.use(cors({
+  origin: 'http://127.0.0.1:5500', // Replace with your frontend URL
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'my-custom-header'],
+  credentials: true,
+}));
+
+// Middleware to handle JSON requests
+app.use(express.json());
+
+// Define your routes here
+// ...
+// Import your routers
+const groupsRouter = require('./routes/groupsRouter'); // Specify the correct path
+const messagesRouter = require('./routes/messagesRouter'); // Specify the correct path
+
+// Mount your routers with URL prefixes
+app.use('/api', groupsRouter);
+app.use('/api/messages', messagesRouter); // Mount the messages router on '/api/messages'
+// Add more routers as needed
+
+// Configure socket.io with CORS
 const io = socketIo(server, {
   cors: {
     origin: "http://127.0.0.1:5500", // Replace with your frontend URL
@@ -14,31 +37,7 @@ const io = socketIo(server, {
   },
 });
 
-// MongoDB connection URL
-const Group=require('./models/group');
-const Message = require('./models/message');
-
-// Middleware to handle JSON requests
-app.use(express.json());
-// Enable CORS for your frontend origin
-// Enable CORS for your frontend origin
-app.use(cors({
-  origin: "http://127.0.0.1:5500", // Replace with your frontend URL
-  methods: ["GET", "POST"],
-  allowedHeaders: ["my-custom-header"],
-  credentials: true,
-}));
-
-//API
-
-// Import your routers
-const groupsRouter = require('./routes/groupsRouter'); // Specify the correct path
-const messagesRouter = require('./routes/messagesRouter'); // Specify the correct path
-
-// Mount your routers with URL prefixes
-app.use('/api', groupsRouter);
-app.use('/api/messages', messagesRouter); // Mount the messages router on '/api/messages'
-// Add more routers as needed
+// Define your socket.io logic her
 const users = {};
 
 io.on("connection", (socket) => {

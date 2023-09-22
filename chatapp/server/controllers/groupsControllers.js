@@ -56,14 +56,21 @@ const groups=async (req, res) => {
     try {
       // Create a new group based on the request body
       const name=req.body.name;
+      console.log(name);
       const usecase=req.body.usecase;
       const newGroup = new Group({name,usecase});
-  
-      // Save the new group to your database
+      if(!name ||!usecase){
+        res.json({error:"data is not correct"});
+      }else{
+        // Save the new group to your database
       const savedGroup = await newGroup.save();
   
       // Return the saved group as a JSON response
+      console.log("saved"+savedGroup);
       res.status(201).json(savedGroup);
+
+      }
+
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });

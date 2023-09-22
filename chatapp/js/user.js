@@ -93,13 +93,28 @@ document.getElementById('cancel-button').addEventListener('click', () => {
 
 newChatForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const chatName = document.getElementById('chat-name').value;
   const chatUsecase = document.getElementById('chat-usecase').value;
-
-  // Send the chatName and chatUsecase to your server using fetch or another method to store in the database.
-
-  // After storing the data, you can close the form.
+  const chatData = {
+    "name": chatName,
+    "usecase": chatUsecase
+  };
+  await fetch('http://localhost:8000/api/newgroups/', {
+    method: 'POST',
+    body: JSON.stringify(chatData), // Replace data with your request body
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json', // Specify the Content-Type header
+    },
+  }).then(response => {
+      if (!response.ok) {
+        console.log('Network response was not ok');
+      }
+      console.log(response.json()); // Parse the JSON response
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   createGroupForm.style.display = 'none';
 });
 
