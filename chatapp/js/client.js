@@ -4,6 +4,16 @@ const mesip = document.getElementById('sendip');
 const messagecontainer = document.querySelector('.chat');
 
 var audio = new Audio('ting.mp3');
+const sendForm = document.getElementById('send-cont');
+
+sendForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const sendip = document.getElementById('sendip').value;
+  var senderUserId='A';
+  var receiverUserId='B';
+  var currentGroupName='Asjad';
+  console.log(sendip);
+});
 
 const append = (message, position) => {
     const messageElement = document.createElement('div');

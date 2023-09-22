@@ -59,6 +59,7 @@ sendForm.addEventListener('submit', async (e) => {
   var senderUserId='A';
   var receiverUserId='B';
   var currentGroupName='Asjad';
+  console.log(sendip);
 
   // Assuming you have variables for sender, receiver, and groupName
   const messageData = {

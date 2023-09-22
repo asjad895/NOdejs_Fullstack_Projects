@@ -15,13 +15,11 @@ const io = socketIo(server, {
 });
 
 // MongoDB connection URL
-const url = "mongodb+srv://mdasjad895:djpgwjc7YXTx48sx@cluster2.utc2zum.mongodb.net/?retryWrites=true&w=majority";
 const Group=require('./models/group');
 const Message = require('./models/message');
 
 // Middleware to handle JSON requests
 app.use(express.json());
-app.use(express.static('public'));
 // Enable CORS for your frontend origin
 // Enable CORS for your frontend origin
 app.use(cors({
@@ -32,59 +30,15 @@ app.use(cors({
 }));
 
 //API
-app.post('/api/messages', async (req, res) => {
-  try {
-    await mongoose.connect(url);
-    console.log("Connected to MongoDB");
-    // Extract data from the request body
-    const { sender, receiver, groupName, text } = req.body;
 
-    // Create a new message document
-    const message = new Message({
-      sender,
-      receiver,
-      groupName,
-      text,
-    });
+// Import your routers
+const groupsRouter = require('./routes/groupsRouter'); // Specify the correct path
+const messagesRouter = require('./routes/messagesRouter'); // Specify the correct path
 
-    // Save the message to the database
-    await message.save();
-
-    // Send a success response
-    res.status(201).json({ message: 'Message stored successfully' });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-
-
-// Define an API endpoint to fetch existing group data
-app.get('/api/groups', async (req, res) => {
-  try {
-    // Connect to the MongoDB database
-    await mongoose.connect(url);
-    console.log("Connected to MongoDB");
-
-    // Fetch existing groups from the "groups" collection
-    const existingGroups = await Group.find();
-
-    // Extract group names and usecases
-    const groupNames = existingGroups.map(group => group.name);
-    const groupUsecases = existingGroups.map(group => group.usecase);
-
-    // Send the group data as JSON response
-    res.json({ groupNames, groupUsecases });
-
-    // Close the MongoDB connection when done
-    mongoose.connection.close();
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
+// Mount your routers with URL prefixes
+app.use('/api/groups', groupsRouter);
+app.use('/api/messages', messagesRouter); // Mount the messages router on '/api/messages'
+// Add more routers as needed
 const users = {};
 
 io.on("connection", (socket) => {
