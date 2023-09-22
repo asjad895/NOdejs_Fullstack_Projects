@@ -29,7 +29,9 @@ const groups=async (req, res) => {
   const newgroups=async (req, res) => {
     try {
       // Create a new group based on the request body
-      const newGroup = new Group(req.body);
+      const name=req.body.name;
+      const usecase=rq.body.usecase;
+      const newGroup = new Group({name,usecase});
   
       // Save the new group to your database
       const savedGroup = await newGroup.save();

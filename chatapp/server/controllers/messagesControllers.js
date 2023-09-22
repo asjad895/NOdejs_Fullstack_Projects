@@ -1,4 +1,4 @@
-
+const Message=require('../models/message')
 const messagesC=async (req, res) => {
     try {
       // Extract data from the request body
@@ -23,4 +23,4 @@ const messagesC=async (req, res) => {
     }
   }
 
-  module.exports={messagesC};
+module.exports={messagesC};
