@@ -36,7 +36,7 @@ const groupsRouter = require('./routes/groupsRouter'); // Specify the correct pa
 const messagesRouter = require('./routes/messagesRouter'); // Specify the correct path
 
 // Mount your routers with URL prefixes
-app.use('/api/groups', groupsRouter);
+app.use('/api', groupsRouter);
 app.use('/api/messages', messagesRouter); // Mount the messages router on '/api/messages'
 // Add more routers as needed
 const users = {};

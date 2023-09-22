@@ -47,9 +47,26 @@ createGroupButton.addEventListener('click', () => {
 
 // Initial population of the group list
 populateGroupList();
+//create new group
+
+
 
 
 //chat-section
+async function showGroupUse() {
+  try {
+    const response = await fetch('http://localhost:8000/api/?Asjad'); // Make a GET request to your API endpoint
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json(); // Parse the JSON response
+    console.log(data); // Return the fetched data
+  } catch (error) {
+    console.error('Error:', error);
+  
+  };
+}
+showGroupUse();
 
 const sendForm = document.getElementById('send-cont');
 

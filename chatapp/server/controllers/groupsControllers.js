@@ -2,6 +2,7 @@ const Group = require("../models/group");
 require('dotenv').config();
 const mongoose=require('mongoose');
 const url = process.env.MONGODB_URL;
+
 const groups=async (req, res) => {
     try {
       // Connect to the MongoDB database
@@ -18,19 +19,37 @@ const groups=async (req, res) => {
       // Send the group data as JSON response
       res.json({ groupNames, groupUsecases });
   
-      // Close the MongoDB connection when done
-      mongoose.connection.close();
+      // // Close the MongoDB connection when done
+      // mongoose.connection.close();
     } catch (err) {
       console.error("Error:", err);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 
+  
+const groupsone=async (req, res) => {
+  try {
+    // Connect to the MongoDB database
+    await mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
+    console.log("Connected to MongoDB");
+    const { name } = req.params;
+    // Fetch existing groups from the "groups" collection
+    const existingGroups = await Group.find({name}).toArray()[0];
+    console.log(existingGroups);
+    res.json(existingGroups);
+    // mongoose.connection.close();
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
   const newgroups=async (req, res) => {
     try {
       // Create a new group based on the request body
       const name=req.body.name;
-      const usecase=rq.body.usecase;
+      const usecase=req.body.usecase;
       const newGroup = new Group({name,usecase});
   
       // Save the new group to your database
@@ -44,4 +63,4 @@ const groups=async (req, res) => {
     }
   }
 
-  module.exports ={groups,newgroups};
+  module.exports ={groups,newgroups,groupsone};
