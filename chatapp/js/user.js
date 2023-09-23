@@ -120,11 +120,14 @@ async function populateGroupList() {
       chatBanner.textContent = newRoomName;
     //update right
       showGroupUse(newRoomName);
+      // Join chatroom
+      socket.emit('joinRoom', { username, newRoomName });
       fetchMessagesForGroup(newRoomName);
     });
   });
 
 }
+
 //form for craete group
 const createGroupButton = document.getElementById('create-group-button');
 const createGroupForm = document.getElementById('create-group-form');
