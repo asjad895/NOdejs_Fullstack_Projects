@@ -1,5 +1,7 @@
 /* Add this CSS to your existing styles or style.css file */
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+/* Add this CSS to your existing styles or style.css file */
+
 :root {
 	--dark-color-a: rgb(77, 93, 201);
 	--dark-color-b: #7386ff;
@@ -7,6 +9,7 @@
 	--success-color: #5cb85c;
 	--error-color: #d9534f;
 }
+
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -14,346 +17,354 @@
 }
 
 .container {
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
-body{
-  max-height: 100vh;
-  padding: 0%;
-  font-family: 'Roboto', sans-serif;
+body {
+	max-height: 100vh;
+	padding: 0%;
+	font-family: 'Roboto', sans-serif;
 }
 
 .sidebar {
-  width: 20%; /* Adjust this width as needed */
-  border: 1px solid #0a0808;
-  border-radius: 5px;
-  /* padding: 10px; */
-  margin-top: 10px; /* Lift the sidebar above the chat section */
-  min-height: 90vh;
-  margin-bottom: 10px;
-  overflow-y: auto;
-  text-align: center;
-  background-color:var(--light-color);
+	width: 20%; /* Adjust this width as needed */
+	border: 1px solid #0a0808;
+	border-radius: 5px;
+	margin-top: 10px; /* Lift the sidebar above the chat section */
+	min-height: 90vh;
+	overflow-y: auto;
+	text-align: center;
+	background-color: var(--light-color);
 }
 
-.sidebarbanner h2{
-  box-sizing: border-box;
-  border-radius: 5px;
-  border: 1px solid #f5d8d8;
-  z-index: 5;
-  color:blue;
-  background-color: var(--dark-color-a)
+.sidebarbanner h2 {
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: 1px solid #f5d8d8;
+	z-index: 5;
+	color: blue;
+	background-color: var(--dark-color-a);
 }
 
 .overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1;
 }
 
 .form-container {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Adjust the height as needed */
 .group-list {
-  height: calc(100vh - 230px); /* Set a fixed height, subtracting header and footer heights */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
-  text-align: center;
-  border: 1px solid #f5d8d8;
-  border-radius: 5px;
+	height: calc(100vh - 230px); /* Set a fixed height, subtracting header and footer heights */
+	overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+	text-align: center;
+	border: 1px solid #f5d8d8;
+	border-radius: 5px;
 }
-
-/* Adjust the height as needed */
 
 #group-list {
-  list-style:none;
-  padding: 0;
+	list-style: none;
+	padding: 0;
 }
 
-/* Style for each dynamically added group item */
 #group-list li {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin: 5px 0;
-  cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin: 5px 0;
+	cursor: pointer;
+	transition: background-color 0.2s, border-color 0.2s;
 }
 
-/* Hover effect for the group items */
 #group-list li:hover {
-  background-color: var(--dark-color-b); /* Adjust to your desired hover background color */
-  border-color: #000000; /* Adjust to your desired hover border color */
+	background-color: var(--dark-color-b); /* Adjust to your desired hover background color */
+	border-color: #000000; /* Adjust to your desired hover border color */
 }
+
 .group-list::-webkit-scrollbar {
-  width: 10px; /* Set the width of the scrollbar */
+	width: 10px; /* Set the width of the scrollbar */
 }
-/* Style the scrollbar thumb (the draggable part) */
+
 .group-list::-webkit-scrollbar-thumb {
-  background-color: #042997; /* Color of the scrollbar thumb */
-  border-radius: 5px; /* Rounded corners for the scrollbar thumb */
+	background-color: #042997; /* Color of the scrollbar thumb */
+	border-radius: 5px; /* Rounded corners for the scrollbar thumb */
 }
 
-/* Style the scrollbar track (the background) */
 .group-list::-webkit-scrollbar-track {
-  background-color: #759ff5; /* Color of the scrollbar track */
-  border-radius: 5px; /* Rounded corners for the scrollbar track */
+	background-color: #759ff5; /* Color of the scrollbar track */
+	border-radius: 5px; /* Rounded corners for the scrollbar track */
 }
 
-/* Hide the scrollbar on Firefox */
-.group-list{
-  scrollbar-width: thin;
-  scrollbar-color: #4caf50 #ccc; /* Color of the scrollbar thumb and track on Firefox */
+.group-list {
+	scrollbar-width: thin;
+	scrollbar-color: #4caf50 #ccc; /* Color of the scrollbar thumb and track on Firefox */
 }
 
-.sidebarbanner{
-  background-color: var(--dark-color-a);
-  padding: 8px 15px;
-  z-index: 10;
-  box-shadow: #1e0243;
-  /* display: flex; */
-  align-items: center;
+.sidebarbanner {
+	background-color: var(--dark-color-a);
+	padding: 8px 15px;
+	z-index: 10;
+	box-shadow: #1e0243;
+	align-items: center;
 }
-#create-group-button,#ai-analyzer-button {
-  background-color: var(--dark-color-b);
-  color: white;
-  border: black;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
+
+#create-group-button,
+#ai-analyzer-button {
+	background-color: var(--dark-color-b);
+	color: white;
+	border: black;
+	border-radius: 4px;
+	padding: 10px 20px;
+	cursor: pointer;
+	margin-top: 10px;
+	margin-right: 10px;
 }
+
 #create-group-button:hover {
-  background-color: #2506a2;
+	background-color: #2506a2;
 }
+
 #ai-analyzer-button:hover {
-  background-color: #5e2fb5;
-}
-.chatbanner{
-  background-color: var(--dark-color-a);
-  padding: 8px 15px;
-  z-index: 10;
-  box-shadow: #1e0243;
+	background-color: #5e2fb5;
 }
 
+.chatbanner {
+	background-color: var(--dark-color-a);
+	padding: 8px 15px;
+	z-index: 10;
+	box-shadow: #1e0243;
+}
 
-.chatbanner h2{
-  box-sizing: border-box;
-  border-radius: 5px;
-  border: 1px solid #f5d8d8;
-  z-index: 5;
-  background-color: var(--dark-color-b);
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0px;
-  color: color-mix(in hsl longer hue, blue .4, --light-color .6);
-
+.chatbanner h2 {
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: 1px solid #f5d8d8;
+	z-index: 5;
+	background-color: var(--dark-color-b);
+	display: flex;
+	justify-content: space-between;
+	margin-top: 0px;
+	color: color-mix(in hsl longer hue, blue .4, --light-color .6);
 }
 
 .chat {
-  background-color: var(--light-color); /* Set your desired background color for messages */
-  flex-grow: 1; /* Allow the chat messages to grow and take available space */
-  height: calc(100vh - 200px); /* Set a fixed height, subtracting header and footer heights */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
-  text-align: center;
-  border: 1px solid #f5d8d8;
-  border-radius: 5px;
-  border-top: #000000;
-  background-image: url('../img/chat_back.png');
-
+	background-color: var(--light-color);
+	flex-grow: 1;
+	height: calc(100vh - 200px);
+	overflow-y: auto;
+	text-align: center;
+	border: 1px solid #f5d8d8;
+	border-radius: 5px;
+	border-top: #000000;
+	background-image: url('../img/chat_back.png');
 }
 
 .chat::-webkit-scrollbar {
-  width: 10px; /* Set the width of the scrollbar */
+	width: 10px;
 }
-/* Style the scrollbar thumb (the draggable part) */
+
 .chat::-webkit-scrollbar-thumb {
-  background-color: #042997; /* Color of the scrollbar thumb */
-  border-radius: 5px; /* Rounded corners for the scrollbar thumb */
+	background-color: #042997;
+	border-radius: 5px;
 }
 
-/* Style the scrollbar track (the background) */
 .chat::-webkit-scrollbar-track {
-  background-color: #759ff5; /* Color of the scrollbar track */
-  border-radius: 5px; /* Rounded corners for the scrollbar track */
+	background-color: #759ff5;
+	border-radius: 5px;
 }
 
-/* Hide the scrollbar on Firefox */
-.chat{
-  scrollbar-width: thin;
-  scrollbar-color: #4caf50 #ccc; /* Color of the scrollbar thumb and track on Firefox */
+.chat {
+	scrollbar-width: thin;
+	scrollbar-color: #4caf50 #ccc;
 }
-
 
 .message {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  margin-left: 2px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+	margin-left: 2px;
 }
 
 .sender {
-  margin-top: 10px;
-  background-color: #a2ccf8;
-  padding: 10px;
-  border-radius: 10px 10px 10px 0;
-  margin-left: auto;
-  float: right;
-  clear: both;
-  justify-content: flex-start;
+	margin-top: 10px;
+	background-color: #a2ccf8;
+	padding: 10px;
+	border-radius: 10px 10px 10px 0;
+	margin-left: auto;
+	float: right;
+	clear: both;
+	justify-content: flex-start;
 }
 
 .receiver {
-  margin-top: 20px;
-  background-color: #d7ddf8;
-  padding: 10px;
-  border-radius: 0 10px 10px 10px;
-  margin-right: auto;
-  float: left;
-  clear: both;
-  justify-content: flex-end;
+	margin-top: 20px;
+	background-color: #d7ddf8;
+	padding: 10px;
+	border-radius: 0 10px 10px 10px;
+	margin-right: auto;
+	float: left;
+	clear: both;
+	justify-content: flex-end;
 }
 
 p {
-  margin-left: 2px;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #050505;
-  display: inline-block;
-  box-sizing: border-box;
-  border-radius: 5px;
-  background-color: transparent;
+	margin-left: 2px;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #050505;
+	display: inline-block;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-color: transparent;
 }
-
 
 .chat-section {
-  width: 80%; /* Adjust this width as needed */
-  border: 1px solid #0a0808;
-  border-radius: 5px;
-  /* padding: 10px 10px; */
-  margin-top: 10px; /* Lift the sidebar above the chat section */
-  min-height: 90vh;
-  margin-bottom: 10px;
-  overflow-y: auto;
-  margin-left: 5px;
-  min-height: fit-content;
+	width: 80%;
+	border: 1px solid #0a0808;
+	border-radius: 5px;
+	margin-top: 10px;
+	min-height: 90vh;
+	overflow-y: auto;
+	margin-left: 5px;
+	min-height: fit-content;
+	justify-content: center;
+	text-align: center;
 }
 
-
 .send {
-  display: flex;
-  justify-content: center;
-  z-index: 10;
-  background-color: #000000;
+	display: flex;
+	justify-content: center;
+	z-index: 10;
+	background-color: #000000;
 }
 
 .send form {
-  display: flex;
-  align-items: center;
-  width: 80%; /* Set width to 100% */
+	display: flex;
+	align-items: center;
+	width: 80%;
 }
 
 .send input[type="text"] {
-  padding: 8px;
-  border: 1px solid #a8bbf4;
-  width: 100%; /* Set width to 100% */
-  border-radius: 4px;
+	padding: 8px;
+	border: 1px solid #a8bbf4;
+	width: 100%;
+	border-radius: 4px;
 }
 
 .send button {
-  background-color: #e373f2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  margin-left: 10px;
-  transition: transform 0.2s;
+	background-color: #e373f2;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	margin-left: 10px;
+	transition: transform 0.2s;
 }
 
 .send button:hover {
-  transform: scale(1.5);
+	transform: scale(1.5);
 }
 
 .send button:active {
-  transform: scale(0.9);
-  transition: transform 0.1s;
+	transform: scale(0.9);
+	transition: transform 0.1s;
 }
 
 /* invisible form */
-/* Style for the "Create" button */
 .overlay button[type="submit"] {
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+	background-color: #007BFF;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+	background-color: #0056b3;
 }
 
 /* Style for the "Cancel" button */
 #cancel-button {
-  background-color: #f44336;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-left: 10px; /* Add some margin to separate from the "Create" button */
+	background-color: #f44336;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-left: 10px; /* Add some margin to separate from the "Create" button */
 }
 
 #cancel-button:hover {
-  background-color: #d32f2f;
+	background-color: #d32f2f;
 }
-.chatbanner a{
-  justify-content: center;
+
+.chatbanner a {
+	justify-content: center;
 }
+
 /* Leave button */
 .lbtn {
 	cursor: pointer;
-	padding:2px 5px;
+	padding: 2px 5px;
 	background: var(--light-color);
 	color: var(--dark-color-a);
-	border:#000000;
+	border: #000000;
 	font-size: 17px;
-  margin-bottom: 2px;
-  max-width: fit-content;
+	margin-bottom: 2px;
+	max-width: fit-content;
 }
 
 /* footer */
 .border {
-  height: 3px;
-  width: 100%;
-  background-color:var(--dark-color-a); 
-  /* Change this to your desired background color */
-  border: 2px solid #e74c3c; /* Change this to your desired border color */
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Style the text */
-  font-size: 24px; /* Text size */
-  font-weight: bold; /* Text weight */
-  margin-top: 0%;
+	height: 60px;
+	width: 100%;
+	background-color: #5f63d9;
+	border: 2px solid #161212;
+	border-radius: 10px;
+	font-style: var(--error-color);
+	text-align: center;
+}
+
+/* Style for h5 element */
+.border h5 {
+	font-size: 20px;
+	margin: 0;
+	color: coral;
+}
+
+/* Style for h6 element */
+.border h6 {
+	font-size: 15px;
+	margin: 0;
+	color: coral;
+}
+
+/* Style for the smile icon (assuming it's inside a <i> element) */
+.border i.fas.fa-smile {
+	font-size: 15px;
+	margin-right: 5px;
+	color: rgb(241, 228, 249);
+}
+
+i.fas.fa-smile {
+	color: rgb(241, 228, 249);
 }
