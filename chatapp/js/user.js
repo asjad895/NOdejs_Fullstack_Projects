@@ -18,7 +18,6 @@ const append = (message, position) => {
 
     messageElement.appendChild(avatarElement);
     messageElement.appendChild(messageText);
-
     messagecontainer.appendChild(messageElement);
     // Scroll to the latest message
     messagecontainer.scrollTop = messagecontainer.scrollHeight;
@@ -57,9 +56,7 @@ async function fetchMessagesForGroup(groupName) {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    
     const data = await response.json();
-
     // Display the fetched messages in the chat section
     const chatSection = document.querySelector('.chat-section');
     // Implement your logic to display messages in the chat section
@@ -68,7 +65,7 @@ async function fetchMessagesForGroup(groupName) {
     console.error('Error:', error);
   }
 }
-
+//URL MANAGEMENT
 // Get the current URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 const username = urlParams.get('username');
@@ -80,8 +77,6 @@ function updateURL(roomName) {
   const newURL = `${window.location.origin}${window.location.pathname}?username=${username}&room=${roomName}`;
   window.history.pushState({ path: newURL }, '', newURL);
 }
-
-
 
 // Listen for changes to the URL
 window.addEventListener('popstate', (event) => {
@@ -112,8 +107,9 @@ async function populateGroupList() {
     // Add click event listeners to join groups here, if needed
     groupList.appendChild(listItem);
      // Add a click event listener for each group name
+     var newRoomName;
     listItem.addEventListener('click', (event) => {
-      const newRoomName = event.target.textContent
+      newRoomName = event.target.textContent
       console.log("Romm clicked:"+newRoomName);
       // Clear the chat messages or fetch and display messages for the selected group
       // Update the chat banner with the selected group's name
@@ -121,16 +117,15 @@ async function populateGroupList() {
       updateURL(newRoomName);
       const chatBanner = document.querySelector('.chatbanner h2 .left-content');
     //create Room
-      chatBanner.textContent = name;
+      chatBanner.textContent = newRoomName;
     //update right
-      showGroupUse(name);
-      fetchMessagesForGroup(name);
+      showGroupUse(newRoomName);
+      fetchMessagesForGroup(newRoomName);
     });
   });
 
 }
 //form for craete group
-
 const createGroupButton = document.getElementById('create-group-button');
 const createGroupForm = document.getElementById('create-group-form');
 const newChatForm = document.getElementById('new-chat-form');
@@ -168,32 +163,31 @@ newChatForm.addEventListener('submit', async (e) => {
       console.error('Error:', error);
     });
   createGroupForm.style.display = 'none';
+    refreshCurrentTab();
 });
 
-//ai 
+//AI ANALYZER -
 const aianalyzer = document.getElementById('ai-analyzer-button');
 aianalyzer.addEventListener('click', () => {
   //logic
   alert("Analyzer clicked");
 });
+
 // Initial population of the group list
 populateGroupList();
-
 
 //chat-section
 async function showGroupUse(group) {
   try {
     const url='http://localhost:8000/api/groups/'.concat(group);
-    const response = await fetch(url); // Make a GET request to your API endpoint
+    const response = await fetch(url); 
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const data = await response.json(); // Parse the JSON response
+    const data = await response.json();
     const chatBanner = document.querySelector('.chatbanner h2 .right-content');
-
     chatBanner.textContent=data.usecase;
-
-    console.log(data); // Return the fetched data
+    console.log(data);
   } catch (error) {
     console.error('Error:', error);};
 }
@@ -255,6 +249,10 @@ async function FormChatListener(){
     alert('Please write something');
   }
 };
+
+function refreshCurrentTab() {
+  location.reload();
+}
 
 //new user
 socket.emit('new_user', username);
