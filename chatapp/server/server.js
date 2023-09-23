@@ -39,14 +39,14 @@ const io = socketIo(server, {
   },
 });
 
-// Define your socket.io logic her
+// Define your socket.io logic here
 // Store a mapping of socket IDs to room names
 const socketToRoom = {};
-const Bot="AiBot"
+const Bot = "AiBot";
+
 io.on("connection", (socket) => {
-  // Send a message to the client when a new user connects
   // Handle the joinRoom event to allow users to join specific rooms
-  socket.on('joinRoom', (room) => {
+  socket.on('joinRoom', ({ username, room }) => {
     // Leave the previous room, if any
     if (socketToRoom[socket.id]) {
       socket.leave(socketToRoom[socket.id]);
@@ -54,25 +54,29 @@ io.on("connection", (socket) => {
     // Join the new room
     socket.join(room);
     socketToRoom[socket.id] = room;
-    socket.emit('newm',FormaMessage(Bot,'Welcome'));
-    socket.on('new_user', uname => {
-      console.log('aa gya', uname);
-      socket.broadcast.emit('user_joined', FormaMessage(uname,'Joined the chat'));
-    });
+    socket.emit('botm', FormaMessage(Bot, 'Welcome to the room :' + username));
+    socket.broadcast.to(room).emit('user_joined', FormaMessage(username, 'Joined the room'));
+    console.log('User joined the room'+room+': '+username);
   });
+
   // Handle the send event and broadcast the message to all clients in the same room
-  socket.on('sendMessage', ({ room, message }) => {
+  socket.on('sendMessage', ({ room,user, message }) => {
+    console.log('romm id: '+socketToRoom[socket.id]+" aya nya message.")
     if (socketToRoom[socket.id]) {
-      io.to(socketToRoom[socket.id]).emit('receiveMessage', { message, name: socket.id });
+      io.to(room).emit('receiveMessage', FormaMessage(user, message));
     }
   });
-  //disconnect
-  socket.on('disconnect',()=>{
-    io.emit('left',FormaMessage(Bot,'chla gya baklol'));
 
-  })
-  //listen for chat m
+  // Handle user disconnection
+  socket.on('disconnect', (user) => {
+    if (socketToRoom[socket.id]) {
+      const room = socketToRoom[socket.id];
+      delete socketToRoom[socket.id];
+      io.to(room).emit('left', FormaMessage(user, 'User left the room'));
+    }
+  });
 
+  // Other event handlers and logic for your chat application
 });
 
 

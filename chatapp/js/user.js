@@ -5,26 +5,46 @@ const messagecontainer = document.querySelector('.chat');
 
 var audio = new Audio('ting.mp3');
 
-const append = (message, position) => {
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-    messageElement.classList.add(position);
+const appendMessage = (username, text, time, position) => {
+  // Create a message element
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+  messageElement.classList.add(position);
 
-    const avatarElement = document.createElement('div');
-    avatarElement.classList.add(position + '-avatar');
+  // Create an avatar element
+  const avatarElement = document.createElement('div');
+  avatarElement.classList.add(position + '-avatar');
 
-    const messageText = document.createElement('p');
-    messageText.innerText = message;
+  // Create a message text element
+  const messageText = document.createElement('p');
+  messageText.innerText = text;
 
-    messageElement.appendChild(avatarElement);
-    messageElement.appendChild(messageText);
-    messagecontainer.appendChild(messageElement);
-    // Scroll to the latest message
-    messagecontainer.scrollTop = messagecontainer.scrollHeight;
-    if (position == 'receiver') {
-        audio.play();
-    }
+  // Create a timestamp element
+  const timestampElement = document.createElement('span');
+  timestampElement.classList.add('timestamp');
+  timestampElement.innerText = time;
+
+  // Create a username element
+  const usernameElement = document.createElement('span');
+  usernameElement.classList.add('username');
+  usernameElement.innerText = username;
+
+  // Append all elements to the message container
+  messageElement.appendChild(avatarElement);
+  messageElement.appendChild(usernameElement);
+  messageElement.appendChild(timestampElement);
+  messageElement.appendChild(messageText);
+  messagecontainer.appendChild(messageElement);
+
+  // Scroll to the latest message
+  messagecontainer.scrollTop = messagecontainer.scrollHeight;
+
+  // Play audio for incoming messages
+  if (position == 'receiver') {
+    audio.play();
+  }
 }
+
 
 // Function to fetch existing group data from the API
 async function fetchExistingGroups() {
@@ -71,7 +91,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const username = urlParams.get('username');
 let room = urlParams.get('room');
 console.log(room+username);
-
+let newRoomName;
 // Function to update the URL with new room
 function updateURL(roomName) {
   const newURL = `${window.location.origin}${window.location.pathname}?username=${username}&room=${roomName}`;
@@ -107,7 +127,6 @@ async function populateGroupList() {
     // Add click event listeners to join groups here, if needed
     groupList.appendChild(listItem);
      // Add a click event listener for each group name
-     var newRoomName;
     listItem.addEventListener('click', (event) => {
       newRoomName = event.target.textContent
       console.log("Romm clicked:"+newRoomName);
@@ -120,8 +139,9 @@ async function populateGroupList() {
       chatBanner.textContent = newRoomName;
     //update right
       showGroupUse(newRoomName);
-      // Join chatroom
-      socket.emit('joinRoom', { username, newRoomName });
+      // Join chatroomn
+      socket.emit('joinRoom', { username, room:newRoomName});
+      console.log("Room joined:"+newRoomName);
       fetchMessagesForGroup(newRoomName);
     });
   });
@@ -196,16 +216,16 @@ async function showGroupUse(group) {
 }
 showGroupUse('Asjad');
 
-
+//Submit Form of Chat Message
 sendForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   //Store Message
-  const sendip = mesip.value;
+  let sendip = mesip.value;
   //SEnd Message
   await FormChatListener();
   var senderUserId='A';
   var receiverUserId='B';
-  var currentGroupName='Asjad';
+  var currentGroupName=newRoomName;
   console.log(sendip);
   // Assuming you have variables for sender, receiver, and groupName
   const messageData = {
@@ -235,18 +255,13 @@ sendForm.addEventListener('submit', async (e) => {
 
 
 async function FormChatListener(){
-  const message = mesip.value.trim(); // Trim whitespace from the input
+  let message = mesip.value.trim(); // Trim whitespace from the input
   if (message !== '') {
-    append(`you: ${message}`, 'sender');
-        // Replace 'selectedGroup' with the actual group or room name
-    const selectedGroup = 'Asjad'; // Replace with the actual group ID
-        //Emit Message to Srver
-    socket.emit('sendMessage', { room: selectedGroup, message });
-        // Listen for incoming messages in the specific group or room
-    socket.on('receiveMessage', ({ message }) => {
-      append(`New Data: ${message}`, 'receiver');
-    });
+    //Send Message to the server
+    socket.emit('sendMessage', { room: newRoomName, user:username,message });
+    console.log("send in romm:"+newRoomName+",message:"+message+"user:"+username);
     mesip.value = '';
+    // mesip.focus();
   } else {
         // Display an alert or error message indicating that the input is blank
     alert('Please write something');
@@ -257,26 +272,33 @@ function refreshCurrentTab() {
   location.reload();
 }
 
-//new user
-socket.emit('new_user', username);
-socket.on('user_joined', ({ username }) => {
-    append(`${username} joined the chat`, 'receiver');
+// Listen for the 'botm' event
+socket.on('botm', (message) => {
+  // This event is for displaying a welcome message when you join a room
+  const { username, text, time } = message;
+  console.log(`Received message from ${username} at ${time}: ${text}`);
+  appendMessage(username,text,time,'sender'); // Implement a function to append messages to your UI
+});
+
+// Listen for the 'user_joined' event
+socket.on('user_joined', (message) => {
+  // This event is for notifying when a user joins the room
+  const { username, text, time } = message;
+  console.log(`Received message from ${username} at ${time}: ${text}`);
+  appendMessage(username,text,time,'sender'); // Implement a function to append messages to your UI
+});
+
+socket.on('receiveMessage', (message) => {
+  // Access the message properties
+  const { username, text, time } = message;
+  // Now, you can use these properties as needed
+  console.log(`Received message from ${username} at ${time}: ${text}`);
+  // Update your UI with the message details
+  appendMessage(username, text,time,'receiver');
 });
 
 
 
 
-socket.on('newm',);
-socket.on('left',);
 
 
-//Send Server New User Information
-socket.emit('new_user', username);
-//Listen Server
-socket.on('user_joined', ({ username }) => {
-  append(`${username} joined the chat`, 'receiver');
-});
-
-
-socket.on('newm',);
-socket.on('left',);
