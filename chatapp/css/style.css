@@ -1,4 +1,18 @@
 /* Add this CSS to your existing styles or style.css file */
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+:root {
+	--dark-color-a: rgb(77, 93, 201);
+	--dark-color-b: #7386ff;
+	--light-color: #e6e9ff;
+	--success-color: #5cb85c;
+	--error-color: #d9534f;
+}
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 .container {
   display: flex;
   justify-content: space-between;
@@ -7,6 +21,7 @@
 body{
   max-height: 100vh;
   padding: 0%;
+  font-family: 'Roboto', sans-serif;
 }
 
 .sidebar {
@@ -19,18 +34,18 @@ body{
   margin-bottom: 10px;
   overflow-y: auto;
   text-align: center;
-  background-color: #b8daf9;
+  background-color:var(--light-color);
 }
 
-h2{
+.sidebarbanner h2{
   box-sizing: border-box;
   border-radius: 5px;
   border: 1px solid #f5d8d8;
   z-index: 5;
-  color:crimson;
-  background-color: #0a85f8;
-
+  color:blue;
+  background-color: var(--dark-color-a)
 }
+
 .overlay {
   display: none;
   position: fixed;
@@ -81,7 +96,7 @@ h2{
 
 /* Hover effect for the group items */
 #group-list li:hover {
-  background-color: #719dee; /* Adjust to your desired hover background color */
+  background-color: var(--dark-color-b); /* Adjust to your desired hover background color */
   border-color: #000000; /* Adjust to your desired hover border color */
 }
 .group-list::-webkit-scrollbar {
@@ -106,7 +121,7 @@ h2{
 }
 
 .sidebarbanner{
-  background-color: #8fc7f9;
+  background-color: var(--dark-color-a);
   padding: 8px 15px;
   z-index: 10;
   box-shadow: #1e0243;
@@ -114,7 +129,7 @@ h2{
   align-items: center;
 }
 #create-group-button,#ai-analyzer-button {
-  background-color: #0a85f8;
+  background-color: var(--dark-color-b);
   color: white;
   border: black;
   border-radius: 4px;
@@ -124,31 +139,34 @@ h2{
   margin-right: 10px;
 }
 #create-group-button:hover {
-  background-color: #45a049;
+  background-color: #2506a2;
 }
 #ai-analyzer-button:hover {
-  background-color: #45a049;
+  background-color: #5e2fb5;
 }
 .chatbanner{
-  background-color: #8fc7f9;
+  background-color: var(--dark-color-a);
   padding: 8px 15px;
   z-index: 10;
   box-shadow: #1e0243;
 }
+
+
 .chatbanner h2{
   box-sizing: border-box;
   border-radius: 5px;
   border: 1px solid #f5d8d8;
   z-index: 5;
-  color:crimson;
-  background-color: #0a85f8;
+  background-color: var(--dark-color-b);
   display: flex;
   justify-content: space-between;
+  margin-top: 0px;
+  color: color-mix(in hsl longer hue, blue .4, --light-color .6);
 
 }
 
 .chat {
-  background-color: #fceaea; /* Set your desired background color for messages */
+  background-color: var(--light-color); /* Set your desired background color for messages */
   flex-grow: 1; /* Allow the chat messages to grow and take available space */
   height: calc(100vh - 200px); /* Set a fixed height, subtracting header and footer heights */
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
@@ -307,4 +325,35 @@ button[type="submit"]:hover {
 
 #cancel-button:hover {
   background-color: #d32f2f;
+}
+.chatbanner a{
+  justify-content: center;
+}
+/* Leave button */
+.lbtn {
+	cursor: pointer;
+	padding:2px 5px;
+	background: var(--light-color);
+	color: var(--dark-color-a);
+	border:#000000;
+	font-size: 17px;
+  margin-bottom: 2px;
+  max-width: fit-content;
+}
+
+/* footer */
+.border {
+  height: 3px;
+  width: 100%;
+  background-color:var(--dark-color-a); 
+  /* Change this to your desired background color */
+  border: 2px solid #e74c3c; /* Change this to your desired border color */
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Style the text */
+  font-size: 24px; /* Text size */
+  font-weight: bold; /* Text weight */
+  margin-top: 0%;
 }

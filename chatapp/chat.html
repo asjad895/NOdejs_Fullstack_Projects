@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
     <!-- ... Your existing head content ... -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+			integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+			crossorigin="anonymous"
+		/>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,7 +16,7 @@
             <div class="sidebarbanner">
                 <button id="create-group-button">New Chat</button>
                 <button id="ai-analyzer-button">AI Analyzer</button>
-                 <h2>Groups</h2>
+                 <h2><i class="fas fa-smile"></i>Groups<i class="fas fa-smile"></i></h2>
             </div>
             <div class="overlay" id="create-group-form">
                 <div class="form-container">
@@ -37,8 +42,9 @@
             <!-- Second column content (chat messages) -->
             <div class="chatbanner">
                 <!-- sender name -->
+                <a id="leave-btn" class="lbtn">Leave Room</a>
                  <h2>
-                    <span class="left-content">Asjad</span>
+                    <span class="left-content"><i class="fas fa-smile"></i>Asjad<i class="fas fa-smile"></i></span>
                     <span class="right-content">New Data</span>
                  </h2>
             </div>
@@ -60,6 +66,10 @@
             </div>
         </section>
     </div>
+    <div class="border">
+        
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
     <script src="js/user.js"></script>
     <script src="js/client.js"></script>
 </body>

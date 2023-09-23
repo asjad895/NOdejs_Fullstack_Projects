@@ -38,7 +38,6 @@ const appendMessage = (username, text, time, position) => {
 
   // Scroll to the latest message
   messagecontainer.scrollTop = messagecontainer.scrollHeight;
-
   // Play audio for incoming messages
   if (position == 'receiver') {
     audio.play();
@@ -272,6 +271,17 @@ function refreshCurrentTab() {
   location.reload();
 }
 
+//Prompt the user before leave chat room
+document.getElementById('leave-btn').addEventListener('click', () => {
+  const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
+  if (leaveRoom) {
+    socket.emit('UserDisconnect',username);
+    window.location = '../index.html';
+  } else {
+  }
+});
+
+
 // Listen for the 'botm' event
 socket.on('botm', (message) => {
   // This event is for displaying a welcome message when you join a room
@@ -280,6 +290,7 @@ socket.on('botm', (message) => {
   appendMessage(username,text,time,'sender'); // Implement a function to append messages to your UI
 });
 
+
 // Listen for the 'user_joined' event
 socket.on('user_joined', (message) => {
   // This event is for notifying when a user joins the room
@@ -287,6 +298,7 @@ socket.on('user_joined', (message) => {
   console.log(`Received message from ${username} at ${time}: ${text}`);
   appendMessage(username,text,time,'sender'); // Implement a function to append messages to your UI
 });
+
 
 socket.on('receiveMessage', (message) => {
   // Access the message properties
@@ -298,7 +310,11 @@ socket.on('receiveMessage', (message) => {
 });
 
 
-
+// Listen for the 'left' event
+socket.on('left', (message) => {
+  // Handle the event here
+  appendMessage(message.username, message.text, message.time, 'receiver');
+});
 
 
 

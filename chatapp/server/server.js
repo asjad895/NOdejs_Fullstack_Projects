@@ -67,18 +67,20 @@ io.on("connection", (socket) => {
     }
   });
 
+
   // Handle user disconnection
-  socket.on('disconnect', (user) => {
+  socket.on('UserDisconnect', (username) => {
+    console.log(`${username} has disconnected.`);
     if (socketToRoom[socket.id]) {
       const room = socketToRoom[socket.id];
       delete socketToRoom[socket.id];
-      io.to(room).emit('left', FormaMessage(user, 'User left the room'));
+      io.to(room).emit('left', FormaMessage(username, 'User left the room'));
+      console.log("bhagga");
     }
   });
 
   // Other event handlers and logic for your chat application
 });
-
 
 const port = process.env.PORT || 8000;
 
