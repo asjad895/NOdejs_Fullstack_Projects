@@ -1,3 +1,31 @@
+const socket = io("http://localhost:8000");
+const sendForm = document.getElementById('send-cont');
+const mesip = document.getElementById('sendip');
+const messagecontainer = document.querySelector('.chat');
+
+var audio = new Audio('ting.mp3');
+
+const append = (message, position) => {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    messageElement.classList.add(position);
+
+    const avatarElement = document.createElement('div');
+    avatarElement.classList.add(position + '-avatar');
+
+    const messageText = document.createElement('p');
+    messageText.innerText = message;
+
+    messageElement.appendChild(avatarElement);
+    messageElement.appendChild(messageText);
+
+    messagecontainer.appendChild(messageElement);
+    // Scroll to the latest message
+    messagecontainer.scrollTop = messagecontainer.scrollHeight;
+    if (position == 'receiver') {
+        audio.play();
+    }
+}
 
 // Function to fetch existing group data from the API
 async function fetchExistingGroups() {
@@ -41,6 +69,33 @@ async function fetchMessagesForGroup(groupName) {
   }
 }
 
+// Get the current URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const username = urlParams.get('username');
+let room = urlParams.get('room');
+console.log(room+username);
+
+// Function to update the URL with new room
+function updateURL(roomName) {
+  const newURL = `${window.location.origin}${window.location.pathname}?username=${username}&room=${roomName}`;
+  window.history.pushState({ path: newURL }, '', newURL);
+}
+
+
+
+// Listen for changes to the URL
+window.addEventListener('popstate', (event) => {
+  // Handle URL changes here
+  const newURLParams = new URLSearchParams(window.location.search);
+  const newRoom = newURLParams.get('room');
+  
+  if (newRoom !== room) {
+    // Room has changed, perform actions accordingly
+    updateURL(newRoom);
+  }
+});
+
+
 async function populateGroupList() {
   const groupList = document.getElementById('group-list');
   const groupO = await fetchData(); // Await the asynchronous function
@@ -57,17 +112,19 @@ async function populateGroupList() {
     // Add click event listeners to join groups here, if needed
     groupList.appendChild(listItem);
      // Add a click event listener for each group name
-    listItem.addEventListener('click', () => {
+    listItem.addEventListener('click', (event) => {
+      const newRoomName = event.target.textContent
+      console.log("Romm clicked:"+newRoomName);
       // Clear the chat messages or fetch and display messages for the selected group
       // Update the chat banner with the selected group's name
       alert('client clicked chat banner group');
-    const chatBanner = document.querySelector('.chatbanner h2 .left-content');
+      updateURL(newRoomName);
+      const chatBanner = document.querySelector('.chatbanner h2 .left-content');
     //create Room
-    
-    chatBanner.textContent = name;
+      chatBanner.textContent = name;
     //update right
-    showGroupUse(name);
-    fetchMessagesForGroup(name);
+      showGroupUse(name);
+      fetchMessagesForGroup(name);
     });
   });
 
@@ -142,16 +199,17 @@ async function showGroupUse(group) {
 }
 showGroupUse('Asjad');
 
-const sendForm = document.getElementById('send-cont');
 
 sendForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const sendip = document.getElementById('sendip').value;
+  //Store Message
+  const sendip = mesip.value;
+  //SEnd Message
+  await FormChatListener();
   var senderUserId='A';
   var receiverUserId='B';
   var currentGroupName='Asjad';
   console.log(sendip);
-
   // Assuming you have variables for sender, receiver, and groupName
   const messageData = {
     "sender": senderUserId,
@@ -177,3 +235,47 @@ sendForm.addEventListener('submit', async (e) => {
     console.error('Error:', error);
   }
 });
+
+
+async function FormChatListener(){
+  const message = mesip.value.trim(); // Trim whitespace from the input
+  if (message !== '') {
+    append(`you: ${message}`, 'sender');
+        // Replace 'selectedGroup' with the actual group or room name
+    const selectedGroup = 'Asjad'; // Replace with the actual group ID
+        //Emit Message to Srver
+    socket.emit('sendMessage', { room: selectedGroup, message });
+        // Listen for incoming messages in the specific group or room
+    socket.on('receiveMessage', ({ message }) => {
+      append(`New Data: ${message}`, 'receiver');
+    });
+    mesip.value = '';
+  } else {
+        // Display an alert or error message indicating that the input is blank
+    alert('Please write something');
+  }
+};
+
+//new user
+socket.emit('new_user', username);
+socket.on('user_joined', ({ username }) => {
+    append(`${username} joined the chat`, 'receiver');
+});
+
+
+
+
+socket.on('newm',);
+socket.on('left',);
+
+
+//Send Server New User Information
+socket.emit('new_user', username);
+//Listen Server
+socket.on('user_joined', ({ username }) => {
+  append(`${username} joined the chat`, 'receiver');
+});
+
+
+socket.on('newm',);
+socket.on('left',);

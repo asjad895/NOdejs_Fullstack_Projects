@@ -1,67 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- ... Your existing head content ... -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div class="container">
-        <section class="sidebar">
-            <div class="sidebarbanner">
-                <button id="create-group-button">New Chat</button>
-                <button id="ai-analyzer-button">AI Analyzer</button>
-                 <h2>Groups</h2>
-            </div>
-            <div class="overlay" id="create-group-form">
-                <div class="form-container">
-                    <h2>Create New Chat</h2>
-                    <form id="new-chat-form">
-                        <label for="chat-name">Name:</label>
-                        <input type="text" id="chat-name" name="chat-name" required>
-                        <label for="chat-usecase">Usecase:</label>
-                        <input type="text" id="chat-usecase" name="chat-usecase" required>
-                        <button type="submit">Create</button>
-                    </form>
-                    <button id="cancel-button">Cancel</button>
-                </div>
-            </div>
-            <div class="group-list">
-                <!-- List of existing groups -->
-                <ul id="group-list">
-                    <!-- Existing groups will be dynamically added here -->
-                </ul>
-            </div>
-        </section>        
-        <section class="chat-section">
-            <!-- Second column content (chat messages) -->
-            <div class="chatbanner">
-                <!-- sender name -->
-                 <h2>
-                    <span class="left-content">Asjad</span>
-                    <span class="right-content">New Data</span>
-                 </h2>
-            </div>
-            <div class="chat">
-                <div class="message sender">
-                    <div class="avatar sender-avatar"></div>
-                </div>
-                <div class="message receiver">
-                    <div class="avatar receiver-avatar"></div>
-
-                </div>
-            </div>
-            <!-- Additional messages... -->
-            <div class="send">
-                <form action="#" id="send-cont">
-                    <input type="text" name="sendip" placeholder="Write a message..."  id="sendip">
-                    <button class="btn" type="submit">send</button>
-                </form>
-            </div>
-        </section>
-    </div>
-    <script src="js/user.js"></script>
-    <script src="js/client.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+			integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="css/index.css" />
+		<title>ChatBot</title>
+	</head>
+	<body>
+		<div class="join-container">
+			<header class="join-header">
+				<h1><i class="fas fa-smile"></i> ChatBot</h1>
+			</header>
+			<main class="join-main">
+				<form action="chat.html">
+					<div class="form-control">
+						<label for="username">Username</label>
+						<input
+							type="text"
+							name="username"
+							id="username"
+							placeholder="Enter username..."
+							required
+						/>
+					</div>
+					<div class="form-control">
+						<label for="room">Room</label>
+						<select name="room" id="room">
+							<option value="Default">Default</option>
+						</select>
+					</div>
+					<button type="submit" class="btn">Join Chat</button>
+				</form>
+			</main>
+		</div>
+	</body>
 </html>
-
