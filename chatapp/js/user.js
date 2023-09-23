@@ -62,6 +62,8 @@ async function populateGroupList() {
       // Update the chat banner with the selected group's name
       alert('client clicked chat banner group');
     const chatBanner = document.querySelector('.chatbanner h2 .left-content');
+    //create Room
+    
     chatBanner.textContent = name;
     //update right
     showGroupUse(name);

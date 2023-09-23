@@ -43,10 +43,12 @@ const socketToRoom = {};
 
 io.on("connection", (socket) => {
   // Send a message to the client when a new user connects
+  socket.emit('newm','Welcome');
   socket.on('new_user', uname => {
     console.log('aa gya', uname);
     socket.broadcast.emit('user_joined', { uname });
   });
+  
   // Handle the joinRoom event to allow users to join specific rooms
   socket.on('joinRoom', (room) => {
     // Leave the previous room, if any
@@ -63,6 +65,13 @@ io.on("connection", (socket) => {
       io.to(socketToRoom[socket.id]).emit('receiveMessage', { message, name: socket.id });
     }
   });
+  //disconnect
+  socket.on('disconnect',()=>{
+    io.emit('left','chla gya baklol');
+
+  })
+  //listen for chat m
+
 });
 
 
