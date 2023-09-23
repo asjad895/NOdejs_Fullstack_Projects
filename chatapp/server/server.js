@@ -1,10 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const FormaMessage=require('./middleware/message');
+const {userJoin,getCurrentUser,userLeave,getRoomUsers}=require('./middleware/user');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
+
 // Enable CORS for your frontend origin
 app.use(cors({
   origin: 'http://127.0.0.1:5500', // Replace with your frontend URL
@@ -40,15 +42,9 @@ const io = socketIo(server, {
 // Define your socket.io logic her
 // Store a mapping of socket IDs to room names
 const socketToRoom = {};
-
+const Bot="AiBot"
 io.on("connection", (socket) => {
   // Send a message to the client when a new user connects
-  socket.emit('newm','Welcome');
-  socket.on('new_user', uname => {
-    console.log('aa gya', uname);
-    socket.broadcast.emit('user_joined', { uname });
-  });
-  
   // Handle the joinRoom event to allow users to join specific rooms
   socket.on('joinRoom', (room) => {
     // Leave the previous room, if any
@@ -58,6 +54,11 @@ io.on("connection", (socket) => {
     // Join the new room
     socket.join(room);
     socketToRoom[socket.id] = room;
+    socket.emit('newm',FormaMessage(Bot,'Welcome'));
+    socket.on('new_user', uname => {
+      console.log('aa gya', uname);
+      socket.broadcast.emit('user_joined', FormaMessage(uname,'Joined the chat'));
+    });
   });
   // Handle the send event and broadcast the message to all clients in the same room
   socket.on('sendMessage', ({ room, message }) => {
@@ -67,7 +68,7 @@ io.on("connection", (socket) => {
   });
   //disconnect
   socket.on('disconnect',()=>{
-    io.emit('left','chla gya baklol');
+    io.emit('left',FormaMessage(Bot,'chla gya baklol'));
 
   })
   //listen for chat m
