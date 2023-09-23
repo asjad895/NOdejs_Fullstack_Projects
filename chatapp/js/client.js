@@ -33,7 +33,9 @@ form.addEventListener('submit', (e) => {
 
     if (message !== '') {
         append(`you: ${message}`, 'sender');
-        socket.emit('send', message);
+        // Replace 'selectedGroup' with the actual group or room name
+        const selectedGroup = 'Asjad'; // Replace with the actual group ID
+        socket.emit('sendMessage', { room: selectedGroup, message });
         mesip.value = '';
     } else {
         // Display an alert or error message indicating that the input is blank
@@ -47,8 +49,7 @@ socket.emit('new_user', uname);
 socket.on('user_joined', ({ uname }) => {
     append(`${uname} joined the chat`, 'receiver');
 });
-
-// recieve is an event
-socket.on('recieve', data => {
-    append(`${data.uname}: ${data.message}`, 'receiver');
+// Listen for incoming messages in the specific group or room
+socket.on('receiveMessage', ({ message }) => {
+    append(`New Data: ${message}`, 'receiver');
 });

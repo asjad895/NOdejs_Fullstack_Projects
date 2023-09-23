@@ -38,21 +38,33 @@ const io = socketIo(server, {
 });
 
 // Define your socket.io logic her
-const users = {};
+// Store a mapping of socket IDs to room names
+const socketToRoom = {};
 
 io.on("connection", (socket) => {
   // Send a message to the client when a new user connects
   socket.on('new_user', uname => {
     console.log('aa gya', uname);
-    users[socket.id] = uname;
     socket.broadcast.emit('user_joined', { uname });
   });
-
-  // Handle the send event and broadcast the message to all clients
-  socket.on('send', message => {
-    socket.broadcast.emit('recieve', { message, name: users[socket.id] });
+  // Handle the joinRoom event to allow users to join specific rooms
+  socket.on('joinRoom', (room) => {
+    // Leave the previous room, if any
+    if (socketToRoom[socket.id]) {
+      socket.leave(socketToRoom[socket.id]);
+    }
+    // Join the new room
+    socket.join(room);
+    socketToRoom[socket.id] = room;
+  });
+  // Handle the send event and broadcast the message to all clients in the same room
+  socket.on('sendMessage', ({ room, message }) => {
+    if (socketToRoom[socket.id]) {
+      io.to(socketToRoom[socket.id]).emit('receiveMessage', { message, name: socket.id });
+    }
   });
 });
+
 
 const port = process.env.PORT || 8000;
 

@@ -22,4 +22,20 @@ const messagesC=async (req, res) => {
     }
   }
 
-module.exports={messagesC};
+  // Define an API endpoint to fetch messages for a specific group
+const messageg=async (req, res) => {
+  try {
+    // Extract the group name from the query parameter
+    const groupName = req.query.group;
+    // Fetch messages for the specified group from the "messages" collection
+    const messages = await Message.findOne({ groupName });
+    console.log(messages);
+    // Send the messages as JSON response
+    res.json(messages);
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+module.exports={messagesC,messageg};

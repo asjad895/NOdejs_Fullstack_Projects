@@ -20,6 +20,8 @@ async function fetchData() {
   console.log('Fetched data:', groupO);
   return groupO;
 }
+
+//fetach chat data
 async function fetchMessagesForGroup(groupName) {
   try {
     // Make an AJAX request to fetch messages for the selected group
@@ -33,8 +35,7 @@ async function fetchMessagesForGroup(groupName) {
     // Display the fetched messages in the chat section
     const chatSection = document.querySelector('.chat-section');
     // Implement your logic to display messages in the chat section
-
-    console.log(data); // For debugging purposes
+    console.log(data.text); // For debugging purposes
   } catch (error) {
     console.error('Error:', error);
   }
@@ -64,17 +65,12 @@ async function populateGroupList() {
     chatBanner.textContent = name;
     //update right
     showGroupUse(name);
-
-      // Implement your logic to fetch and display messages for the selected group
-      // You can make an AJAX request to your server here
-
-      // Example: Fetch and display messages for the selected group
     fetchMessagesForGroup(name);
     });
   });
 
 }
-
+//form for craete group
 
 const createGroupButton = document.getElementById('create-group-button');
 const createGroupForm = document.getElementById('create-group-form');
@@ -115,6 +111,7 @@ newChatForm.addEventListener('submit', async (e) => {
   createGroupForm.style.display = 'none';
 });
 
+//ai 
 const aianalyzer = document.getElementById('ai-analyzer-button');
 aianalyzer.addEventListener('click', () => {
   //logic
@@ -122,7 +119,7 @@ aianalyzer.addEventListener('click', () => {
 });
 // Initial population of the group list
 populateGroupList();
-//create new group
+
 
 //chat-section
 async function showGroupUse(group) {
@@ -155,10 +152,10 @@ sendForm.addEventListener('submit', async (e) => {
 
   // Assuming you have variables for sender, receiver, and groupName
   const messageData = {
-    sender: senderUserId,
-    receiver: receiverUserId,
-    groupName: currentGroupName,
-    text: sendip,
+    "sender": senderUserId,
+    "receiver": receiverUserId,
+    "groupName": currentGroupName,
+    "text": sendip,
   };
   try {
     // Send the message asynchronously without waiting for a response
