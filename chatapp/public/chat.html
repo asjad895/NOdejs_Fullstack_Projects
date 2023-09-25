@@ -6,6 +6,13 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <div id="customAlert" class="hidden">
+            <div class="alert-content">
+                <p id="error-message"></p>
+                <span class="close-icon" onclick="hideCustomAlert()">&times;</span>
+            </div>
+        </div>
+    
         <div class="container">
             <section class="sidebar">
                 <div class="sidebarbanner">
@@ -32,6 +39,7 @@
                 </div>
             </section>
             <section class="chat-section">
+                <div id="message-container">
                 <div class="chatbanner">
                     <a id="leave-btn" class="lbtn">Leave Room</a>
                     <h2>

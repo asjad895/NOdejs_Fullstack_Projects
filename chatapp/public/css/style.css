@@ -381,3 +381,33 @@ button[type="submit"]:hover {
 i.fas.fa-smile {
 	color: rgb(241, 228, 249);
 }
+
+/* Add your custom styles for the alert here */
+.hidden {
+    display: none;
+}
+
+.alert-content {
+    background-color: #7993ee;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #ff0000; 
+}

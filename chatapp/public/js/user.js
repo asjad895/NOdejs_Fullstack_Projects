@@ -78,11 +78,13 @@ async function fetchExistingGroups() {
   try {
     const response = await fetch('/api/groups'); // Make a GET request to your API endpoint
     if (!response.ok) {
+      showError('An error occurred while processing your request. Please try again.');
       throw new Error('Network response was not ok');
     }
     const data = await response.json(); // Parse the JSON response
     return data; // Return the fetched data
   } catch (error) {
+    showError('An error occurred while processing your request. Please try again.');
     console.error('Error:', error);
     return { groupNames: [], groupUsecases: [] }; 
   }
@@ -101,6 +103,7 @@ async function fetchMessagesForGroup(groupName) {
     // Make an AJAX request to fetch messages for the selected group
     const response = await fetch(`/api/messages?group=${groupName}`);
     if (!response.ok) {
+      showError('Your group does not have nay saved data');
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
@@ -109,6 +112,7 @@ async function fetchMessagesForGroup(groupName) {
     // Implement your logic to display messages in the chat section
     console.log(data.text); 
   } catch (error) {
+    showError('An error occurred while processing your request. Please try again.');
     console.error('Error:', error);
   }
 }
@@ -203,11 +207,13 @@ newChatForm.addEventListener('submit', async (e) => {
     },
   }).then(response => {
       if (!response.ok) {
+        showError('Some thing wrong Try again.');
         console.log('Network response was not ok');
       }
       console.log(response.json()); 
     })
     .catch(error => {
+      showError(error);
       console.error('Error:', error);
     });
   createGroupForm.style.display = 'none';
@@ -230,13 +236,14 @@ async function showGroupUse(group) {
     const url='/api/groups/'.concat(group);
     const response = await fetch(url); 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      showError('Your Group has not any data saved.');
     }
     const data = await response.json();
     const chatBanner = document.querySelector('.chatbanner h2 .right-content');
     chatBanner.textContent=data.usecase;
     console.log(data);
   } catch (error) {
+    showError(error);
     console.error('Error:', error);};
 }
 showGroupUse('Asjad');
@@ -267,17 +274,34 @@ sendForm.addEventListener('submit', async (e) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(messageData),
-    }).then(() => {
-      console.log('Message sent asynchronously');
+    }).then((response) => {
+      if (!response.ok) {
+        showError('An error occurred while processing your request. Please try again.');
+      }
       // Clear the input field or update the UI as needed
+      console.log('Message sent asynchronously');
     }).catch((error) => {
-      console.error('Error:', error);
+      // Handle network-related errors
+      console.error('Network error:', error);
+      // Display a user-friendly error message to the user
+      showError(error.message);
     });
   } catch (error) {
-    console.error('Error:', error);
+    // Handle JavaScript errors (e.g., invalid JSON data)
+    console.error('JavaScript error:', error);
+    // Display a user-friendly error message to the user
+    showError('An error occurred while processing your request. Please try again.');
   }
-});
 
+});
+  
+  // Function to show error message using Bootstrap alert
+function showError(message) {
+    const errorMessage = document.getElementById('error-message');
+    const errorAlert = document.getElementById('error-alert');
+    errorMessage.innerText = message;
+    errorAlert.style.display = 'block';
+}
 
 async function FormChatListener(){
   let message = mesip.value.trim(); 
@@ -288,7 +312,6 @@ async function FormChatListener(){
     mesip.value = '';
     // mesip.focus();
   } else {
-        // Display an alert or error message indicating that the input is blank
     alert('Please write something');
   }
 };
@@ -296,7 +319,6 @@ async function FormChatListener(){
 function refreshCurrentTab() {
   location.reload();
 }
-
 //Prompt the user before leave chat room
 document.getElementById('leave-btn').addEventListener('click', () => {
   const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
@@ -306,7 +328,6 @@ document.getElementById('leave-btn').addEventListener('click', () => {
   } else {
   }
 });
-
 
 // Listen for the 'botm' event
 socket.on('botm', (message) => {
