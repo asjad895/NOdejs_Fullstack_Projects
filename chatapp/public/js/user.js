@@ -140,7 +140,11 @@ window.addEventListener('popstate', (event) => {
     updateURL(newRoom);
   }
 });
-
+//Remove existing chat
+function clearChatArea() {
+  const chatContainer = document.querySelector('.chat');
+  chatContainer.innerHTML = '';  
+}
 
 async function populateGroupList() {
   const groupList = document.getElementById('group-list');
