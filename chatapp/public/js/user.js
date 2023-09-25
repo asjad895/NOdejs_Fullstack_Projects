@@ -69,20 +69,18 @@ const appendMessage = (username, text, time, position) => {
     audio.play();
   }
 }
-
-
-
-
+async function refreshCurrentTab() {
+  location.reload();
+}
 // Function to fetch existing group data from the API
 async function fetchExistingGroups() {
   try {
     const response = await fetch('/api/groups'); // Make a GET request to your API endpoint
     if (!response.ok) {
-      showError('An error occurred while processing your request. Please try again.');
-      throw new Error('Network response was not ok');
+      showError('Your data have not saved yet.');
     }
     const data = await response.json(); // Parse the JSON response
-    return data; // Return the fetched data
+    return data;
   } catch (error) {
     showError('An error occurred while processing your request. Please try again.');
     console.error('Error:', error);
@@ -104,7 +102,6 @@ async function fetchMessagesForGroup(groupName) {
     const response = await fetch(`/api/messages?group=${groupName}`);
     if (!response.ok) {
       showError('Your group does not have nay saved data');
-      throw new Error('Network response was not ok');
     }
     const data = await response.json();
     // Display the fetched messages in the chat section
@@ -113,7 +110,6 @@ async function fetchMessagesForGroup(groupName) {
     console.log(data.text); 
   } catch (error) {
     showError('An error occurred while processing your request. Please try again.');
-    console.error('Error:', error);
   }
 }
 //URL MANAGEMENT
@@ -121,7 +117,6 @@ async function fetchMessagesForGroup(groupName) {
 const urlParams = new URLSearchParams(window.location.search);
 const username = urlParams.get('username');
 let room = urlParams.get('room');
-console.log(room+username);
 let newRoomName;
 // Function to update the URL with new room
 function updateURL(roomName) {
@@ -173,9 +168,11 @@ async function populateGroupList() {
     //update right
       showGroupUse(newRoomName);
       // Join chatroomn
-      socket.emit('joinRoom', { username, room:newRoomName});
-      console.log("Room joined:"+newRoomName);
-      fetchMessagesForGroup(newRoomName);
+      setTimeout(() => {
+        socket.emit('joinRoom', { username, room:newRoomName});
+        // console.log("Room joined:"+newRoomName);
+        fetchMessagesForGroup(newRoomName);
+      },1000);
     });
   });
 
@@ -212,13 +209,10 @@ newChatForm.addEventListener('submit', async (e) => {
   }).then(response => {
       if (!response.ok) {
         showError('Some thing wrong Try again.');
-        console.log('Network response was not ok');
       }
-      console.log(response.json()); 
     })
     .catch(error => {
       showError(error);
-      console.error('Error:', error);
     });
   createGroupForm.style.display = 'none';
     refreshCurrentTab();
@@ -248,7 +242,7 @@ async function showGroupUse(group) {
     console.log(data);
   } catch (error) {
     showError(error);
-    console.error('Error:', error);};
+  }
 }
 showGroupUse('Asjad');
 
@@ -282,24 +276,18 @@ sendForm.addEventListener('submit', async (e) => {
       if (!response.ok) {
         showError('An error occurred while processing your request. Please try again.');
       }
-      // Clear the input field or update the UI as needed
       console.log('Message sent asynchronously');
     }).catch((error) => {
-      // Handle network-related errors
-      console.error('Network error:', error);
       // Display a user-friendly error message to the user
       showError(error.message);
     });
   } catch (error) {
-    // Handle JavaScript errors (e.g., invalid JSON data)
-    console.error('JavaScript error:', error);
     // Display a user-friendly error message to the user
     showError('An error occurred while processing your request. Please try again.');
   }
 
 });
   
-  // Function to show error message using Bootstrap alert
 function showError(message) {
     const errorMessage = document.getElementById('error-message');
     const errorAlert = document.getElementById('error-alert');
@@ -312,7 +300,7 @@ async function FormChatListener(){
   if (message !== '') {
     //Send Message to the server
     socket.emit('sendMessage', { room: newRoomName, user:username,message });
-    console.log("send in romm:"+newRoomName+",message:"+message+"user:"+username);
+    // console.log("send in romm:"+newRoomName+",message:"+message+"user:"+username);
     mesip.value = '';
     // mesip.focus();
   } else {
@@ -320,9 +308,6 @@ async function FormChatListener(){
   }
 };
 
-function refreshCurrentTab() {
-  location.reload();
-}
 //Prompt the user before leave chat room
 document.getElementById('leave-btn').addEventListener('click', () => {
   const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
