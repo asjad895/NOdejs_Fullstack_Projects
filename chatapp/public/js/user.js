@@ -149,10 +149,8 @@ function clearChatArea() {
 async function populateGroupList() {
   const groupList = document.getElementById('group-list');
   const groupO = await fetchData(); // Await the asynchronous function
-
   // Clear the existing list
   groupList.innerHTML = '';
-
   // Populate the list with fetched groups
   groupO.groupNames.forEach(name => {
     const listItem = document.createElement('li');
@@ -167,6 +165,8 @@ async function populateGroupList() {
       console.log("Romm clicked:"+newRoomName);
       alert('client clicked chat banner group');
       updateURL(newRoomName);
+      // Clear the chat area before fetching new data
+      clearChatArea();
       const chatBanner = document.querySelector('.chatbanner h2 .left-content');
     //create Room
       chatBanner.textContent = newRoomName;
