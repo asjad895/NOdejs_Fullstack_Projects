@@ -1,4 +1,4 @@
-const socket = io("http://localhost:8000");
+const socket = io();
 const sendForm = document.getElementById('send-cont');
 const mesip = document.getElementById('sendip');
 const messagecontainer = document.querySelector('.chat');
@@ -76,7 +76,7 @@ const appendMessage = (username, text, time, position) => {
 // Function to fetch existing group data from the API
 async function fetchExistingGroups() {
   try {
-    const response = await fetch('http://localhost:8000/api/groups'); // Make a GET request to your API endpoint
+    const response = await fetch('/api/groups'); // Make a GET request to your API endpoint
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -99,7 +99,7 @@ async function fetchData() {
 async function fetchMessagesForGroup(groupName) {
   try {
     // Make an AJAX request to fetch messages for the selected group
-    const response = await fetch(`http://localhost:8000/api/messages?group=${groupName}`);
+    const response = await fetch(`/api/messages?group=${groupName}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -194,7 +194,7 @@ newChatForm.addEventListener('submit', async (e) => {
     "name": chatName,
     "usecase": chatUsecase
   };
-  await fetch('http://localhost:8000/api/newgroups/', {
+  await fetch('/api/newgroups/', {
     method: 'POST',
     body: JSON.stringify(chatData),
     credentials: 'include',
@@ -227,7 +227,7 @@ populateGroupList();
 //chat-section
 async function showGroupUse(group) {
   try {
-    const url='http://localhost:8000/api/groups/'.concat(group);
+    const url='/api/groups/'.concat(group);
     const response = await fetch(url); 
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -261,7 +261,7 @@ sendForm.addEventListener('submit', async (e) => {
   };
   try {
     // Send the message asynchronously without waiting for a response
-    fetch('http://localhost:8000/api/messages', {
+    fetch('/api/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
