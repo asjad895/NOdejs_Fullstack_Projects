@@ -1,5 +1,6 @@
 const express = require('express');
 const FormaMessage=require('./middleware/message');
+const createWelcomeMessage=require('./middleware/welcome');
 const {userJoin,getCurrentUser,userLeave,getRoomUsers}=require('./middleware/user');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -18,9 +19,6 @@ app.use(cors({
 // Middleware to handle JSON requests
 app.use(express.json());
 
-// Define your routes here
-// ...
-// Import your routers
 const groupsRouter = require('./routes/groupsRouter'); // Specify the correct path
 const messagesRouter = require('./routes/messagesRouter'); // Specify the correct path
 
@@ -54,7 +52,7 @@ io.on("connection", (socket) => {
     // Join the new room
     socket.join(room);
     socketToRoom[socket.id] = room;
-    socket.emit('botm', FormaMessage(Bot, 'Welcome to the room :' + username));
+    socket.emit('botm', createWelcomeMessage);
     socket.broadcast.to(room).emit('user_joined', FormaMessage(username, 'Joined the room'));
     console.log('User joined the room'+room+': '+username);
   });

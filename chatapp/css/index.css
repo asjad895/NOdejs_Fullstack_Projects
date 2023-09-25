@@ -40,9 +40,10 @@ a {
 
 /* Join Page */
 .join-container {
-	max-width: 500px;
+	max-width: 50vw !important;
 	margin: 80px auto;
 	color: #fff;
+	max-height: 50vh !important;
 }
 
 .join-header {
@@ -88,14 +89,4 @@ a {
 .join-main .btn {
 	margin-top: 20px;
 	width: 100%;
-}
-
-@media (max-width: 700px) {
-	.chat-main {
-		display: block;
-	}
-
-	.chat-sidebar {
-		display: none;
-	}
 }

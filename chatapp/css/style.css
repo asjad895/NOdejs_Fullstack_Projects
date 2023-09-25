@@ -43,7 +43,6 @@ body {
 	border-radius: 5px;
 	border: 1px solid #f5d8d8;
 	z-index: 5;
-	color: blue;
 	background-color: var(--dark-color-a);
 }
 

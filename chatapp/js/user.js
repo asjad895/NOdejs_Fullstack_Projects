@@ -4,45 +4,73 @@ const mesip = document.getElementById('sendip');
 const messagecontainer = document.querySelector('.chat');
 
 var audio = new Audio('ting.mp3');
-
 const appendMessage = (username, text, time, position) => {
   // Create a message element
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
   messageElement.classList.add(position);
 
-  // Create an avatar element
-  const avatarElement = document.createElement('div');
-  avatarElement.classList.add(position + '-avatar');
-
-  // Create a message text element
-  const messageText = document.createElement('p');
-  messageText.innerText = text;
+  // Create a timestamp and username element container
+  const topRow = document.createElement('div');
+  topRow.classList.add('top-row');
+  topRow.style.border = '1px solid #ccc'; // You can adjust the color and width as needed
+  topRow.style.borderRadius = '5px'
+  topRow.style.padding = '5px'
+  topRow.style.marginRight = '5px'
+  topRow.style.zIndex='10'
 
   // Create a timestamp element
   const timestampElement = document.createElement('span');
   timestampElement.classList.add('timestamp');
   timestampElement.innerText = time;
+  timestampElement.style.fontSize = '10px';
+  timestampElement.style.webkitTextStrokeColor = 'red';
 
   // Create a username element
   const usernameElement = document.createElement('span');
   usernameElement.classList.add('username');
   usernameElement.innerText = username;
+  usernameElement.style.fontSize = '14px'; 
+  timestampElement.style.color = 'black';
+  usernameElement.style.marginRight = '5px'
 
-  // Append all elements to the message container
-  messageElement.appendChild(avatarElement);
-  messageElement.appendChild(usernameElement);
-  messageElement.appendChild(timestampElement);
+  // Create a message text element
+  const messageText = document.createElement('p');
+  messageText.innerText = text;
+
+  // Create an avatar element
+  const avatarElement = document.createElement('div');
+  avatarElement.classList.add(position + '-avatar');
+
+  // Add some margin between elements
+  messageText.style.marginTop = '4px';
+
+  // Append elements to the top row container
+  topRow.appendChild(usernameElement);
+  topRow.appendChild(timestampElement);
+
+  // Append the top row container and message text to the message element
+  messageElement.appendChild(topRow);
   messageElement.appendChild(messageText);
+
+  // Append the avatar element (if needed)
+  if (position === 'receiver') {
+    messageElement.appendChild(avatarElement);
+  }
+
+  // Append the message element to the message container
   messagecontainer.appendChild(messageElement);
 
   // Scroll to the latest message
   messagecontainer.scrollTop = messagecontainer.scrollHeight;
+
   // Play audio for incoming messages
-  if (position == 'receiver') {
+  if (position === 'receiver') {
     audio.play();
   }
 }
+
+
 
 
 // Function to fetch existing group data from the API
@@ -56,7 +84,7 @@ async function fetchExistingGroups() {
     return data; // Return the fetched data
   } catch (error) {
     console.error('Error:', error);
-    return { groupNames: [], groupUsecases: [] }; // Return an empty object in case of an error
+    return { groupNames: [], groupUsecases: [] }; 
   }
 }
 
@@ -79,7 +107,7 @@ async function fetchMessagesForGroup(groupName) {
     // Display the fetched messages in the chat section
     const chatSection = document.querySelector('.chat-section');
     // Implement your logic to display messages in the chat section
-    console.log(data.text); // For debugging purposes
+    console.log(data.text); 
   } catch (error) {
     console.error('Error:', error);
   }
@@ -129,8 +157,6 @@ async function populateGroupList() {
     listItem.addEventListener('click', (event) => {
       newRoomName = event.target.textContent
       console.log("Romm clicked:"+newRoomName);
-      // Clear the chat messages or fetch and display messages for the selected group
-      // Update the chat banner with the selected group's name
       alert('client clicked chat banner group');
       updateURL(newRoomName);
       const chatBanner = document.querySelector('.chatbanner h2 .left-content');
@@ -170,16 +196,16 @@ newChatForm.addEventListener('submit', async (e) => {
   };
   await fetch('http://localhost:8000/api/newgroups/', {
     method: 'POST',
-    body: JSON.stringify(chatData), // Replace data with your request body
+    body: JSON.stringify(chatData),
     credentials: 'include',
     headers: {
-      'Content-Type': 'application/json', // Specify the Content-Type header
+      'Content-Type': 'application/json', 
     },
   }).then(response => {
       if (!response.ok) {
         console.log('Network response was not ok');
       }
-      console.log(response.json()); // Parse the JSON response
+      console.log(response.json()); 
     })
     .catch(error => {
       console.error('Error:', error);
@@ -254,7 +280,7 @@ sendForm.addEventListener('submit', async (e) => {
 
 
 async function FormChatListener(){
-  let message = mesip.value.trim(); // Trim whitespace from the input
+  let message = mesip.value.trim(); 
   if (message !== '') {
     //Send Message to the server
     socket.emit('sendMessage', { room: newRoomName, user:username,message });
@@ -285,9 +311,10 @@ document.getElementById('leave-btn').addEventListener('click', () => {
 // Listen for the 'botm' event
 socket.on('botm', (message) => {
   // This event is for displaying a welcome message when you join a room
+  console.log(message);
   const { username, text, time } = message;
   console.log(`Received message from ${username} at ${time}: ${text}`);
-  appendMessage(username,text,time,'sender'); // Implement a function to append messages to your UI
+  appendMessage(username,text,time,'sender');
 });
 
 
